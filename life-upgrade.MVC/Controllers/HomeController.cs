@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using life_upgrade.MVC.Models;
+using LifeUpgrade.MVC.Models;
 
-namespace life_upgrade.MVC.Controllers;
+namespace LifeUpgrade.MVC.Controllers;
 
 public class HomeController : Controller
 {
@@ -20,6 +20,15 @@ public class HomeController : Controller
 
     public IActionResult Privacy()
     {
+        return View();
+    }
+
+    public IActionResult About()
+    {
+        ViewData["Title"] = "About";
+        ViewData["Description"] = "Description content";
+        ViewData["Tags"] = new List<string>(){"Tag1", "Tag2", "Tag3"};
+        
         return View();
     }
 

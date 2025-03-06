@@ -1,4 +1,4 @@
-namespace life_upgrade.MVC.Models;
+namespace LifeUpgrade.MVC.Models;
 
 public class ErrorViewModel
 {

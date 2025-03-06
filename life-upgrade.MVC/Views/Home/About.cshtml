@@ -1,0 +1,16 @@
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<h1>@ViewData["Description"]</h1>
+
+<p>There is description.</p>
+
+<ul>
+    @foreach(var tag in ViewData["Tags"] as IList<string>)
+    {
+        <li>
+            @tag
+        </li>
+    }
+</ul>

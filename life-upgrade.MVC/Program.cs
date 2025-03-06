@@ -1,10 +1,20 @@
+using LifeUpgrade.Infrastructure.Extensions;
+using LifeUpgrade.Infrastructure.Persistence;
+using LifeUpgrade.Infrastructure.Seeders;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
+var scope = app.Services.CreateScope();
+
+var seeder = scope.ServiceProvider.GetRequiredService<ProductSeeder>();
+await seeder.SeedAsync();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
