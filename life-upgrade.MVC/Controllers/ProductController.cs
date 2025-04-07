@@ -1,6 +1,7 @@
 using LifeUpgrade.Application.Product;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Application.Product.Queries.GetAllProducts;
+using LifeUpgrade.Application.Product.Queries.GetProductByEncodedName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,13 @@ public class ProductController : Controller
     {
         var products = await _mediator.Send(new GetAllProductsQuery());
         return View(products);
+    }
+    
+    [Route("Product/{encodedName}/Details")]
+    public async Task<IActionResult> Details(string encodedName)
+    {
+        var dto = await _mediator.Send(new GetProductByEncodedNameQuery(encodedName));
+        return View(dto);
     }
 
     public IActionResult Create()

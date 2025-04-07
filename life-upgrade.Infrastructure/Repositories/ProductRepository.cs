@@ -24,4 +24,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetAll()
         => await _dbContext.Products.ToListAsync();
+
+    public Task<Product?> GetByEncodedName(string encodedName)
+        => _dbContext.Products.FirstOrDefaultAsync(p => p.EncodedName == encodedName);
 }
