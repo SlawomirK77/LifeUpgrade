@@ -13,5 +13,8 @@ public class ProductMappingProfile : Profile
             {
                 Type = src.Type,
             }));
+
+        CreateMap<Domain.Entities.Product, ProductDto>()
+            .ForMember(dto => dto.Type, opt => opt.MapFrom(src => src.Details.Type));
     }
 }

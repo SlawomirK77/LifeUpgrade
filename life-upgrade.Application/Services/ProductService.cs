@@ -23,4 +23,12 @@ public class ProductService : IProductService
         product.Details = new ProductDetails();
         await _productRepository.Create(product);
     }
+
+    public async Task<IEnumerable<ProductDto>> GetAll()
+    {
+        var products =  await _productRepository.GetAll();
+        var dtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+        
+        return dtos;
+    }
 }

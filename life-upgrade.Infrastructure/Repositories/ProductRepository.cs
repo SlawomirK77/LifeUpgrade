@@ -21,5 +21,7 @@ public class ProductRepository : IProductRepository
 
     public Task<Product?> GetByName(string name)
         => _dbContext.Products.FirstOrDefaultAsync(p => p.Name.ToLower() == name.ToLower());
-    
+
+    public async Task<IEnumerable<Product>> GetAll()
+        => await _dbContext.Products.ToListAsync();
 }
