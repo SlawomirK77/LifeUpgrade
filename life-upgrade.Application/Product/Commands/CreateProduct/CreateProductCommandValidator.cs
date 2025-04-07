@@ -1,12 +1,13 @@
 using System.Security.AccessControl;
 using FluentValidation;
+using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Domain.Interfaces;
 
 namespace LifeUpgrade.Application.Product;
 
-public class ProductDtoValidator : AbstractValidator<ProductDto>
+public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {
-    public ProductDtoValidator(IProductRepository repository)
+    public CreateProductCommandValidator(IProductRepository repository)
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name cannot be empty")

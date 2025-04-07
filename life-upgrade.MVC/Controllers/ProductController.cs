@@ -1,5 +1,7 @@
 using LifeUpgrade.Application.Product;
-using LifeUpgrade.Application.Services;
+using LifeUpgrade.Application.Product.Commands.CreateProduct;
+using LifeUpgrade.Application.Product.Queries.GetAllProducts;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LifeUpgrade.MVC.Controllers;
@@ -7,17 +9,17 @@ namespace LifeUpgrade.MVC.Controllers;
 public class ProductController : Controller
 {
     private readonly ILogger<ProductController> _logger;
-    private readonly IProductService _productService;
+    private readonly IMediator _mediator;
 
-    public ProductController(ILogger<ProductController> logger, IProductService productService)
+    public ProductController(ILogger<ProductController> logger, IMediator mediator)
     {
         _logger = logger;
-        _productService = productService;
+        _mediator = mediator;
     }
     
     public async Task<IActionResult> Index()
     {
-        var products = await _productService.GetAll();
+        var products = await _mediator.Send(new GetAllProductsQuery());
         return View(products);
     }
 
@@ -27,13 +29,13 @@ public class ProductController : Controller
     }
     
     [HttpPost]
-    public async Task<IActionResult> Create(ProductDto product)
+    public async Task<IActionResult> Create(CreateProductCommand command)
     {
         if (!ModelState.IsValid)
         {
-            return View(product);
+            return View(command);
         }
-        await _productService.Create(product);
+        await _mediator.Send(command);
         return RedirectToAction(nameof(Create));
     }
 }
