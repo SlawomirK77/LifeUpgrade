@@ -1,3 +1,5 @@
+using LifeUpgrade.Application.Product;
+using LifeUpgrade.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LifeUpgrade.MVC.Controllers;
@@ -5,10 +7,12 @@ namespace LifeUpgrade.MVC.Controllers;
 public class ProductController : Controller
 {
     private readonly ILogger<ProductController> _logger;
+    private readonly IProductService _productService;
 
-    public ProductController(ILogger<ProductController> logger)
+    public ProductController(ILogger<ProductController> logger, IProductService productService)
     {
         _logger = logger;
+        _productService = productService;
     }
     
     public IActionResult Index()
@@ -16,8 +20,19 @@ public class ProductController : Controller
         return View();
     }
 
-    public IActionResult Add()
+    public IActionResult Create()
     {
         return View();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Create(ProductDto product)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(product);
+        }
+        await _productService.Create(product);
+        return RedirectToAction(nameof(Create));
     }
 }

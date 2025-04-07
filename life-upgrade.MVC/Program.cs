@@ -1,3 +1,4 @@
+using LifeUpgrade.Application.Extensions;
 using LifeUpgrade.Infrastructure.Extensions;
 using LifeUpgrade.Infrastructure.Persistence;
 using LifeUpgrade.Infrastructure.Seeders;
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

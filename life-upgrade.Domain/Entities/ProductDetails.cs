@@ -2,7 +2,7 @@ namespace LifeUpgrade.Domain.Entities
 {
     public class ProductDetails
     {
-        public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public List<ProductType> Type { get; set; } = [];
     }
 

@@ -1,4 +1,6 @@
+using LifeUpgrade.Domain.Interfaces;
 using LifeUpgrade.Infrastructure.Persistence;
+using LifeUpgrade.Infrastructure.Repositories;
 using LifeUpgrade.Infrastructure.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,5 +16,6 @@ public static class ServiceCollectionExtension
             configuration.GetConnectionString("LifeUpgradeSqlServer")));
 
         services.AddScoped<ProductSeeder>();
+        services.AddScoped<IProductRepository, ProductRepository>();
     }
 }

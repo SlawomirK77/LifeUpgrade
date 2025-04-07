@@ -1,0 +1,44 @@
+@using LifeUpgrade.Domain.Entities
+@using LifeUpgrade.Application.Product;
+
+@model ProductDto
+<h1>Create product</h1>
+<hr/>
+
+<div class="row">
+    <div class="col-md-4">
+        <form action="/Product/Create" method="post">
+            <div class="form-group mb-3">
+                <label class="control-label" for="Name">Name</label>
+                <input class="form-control" type="text" asp-for="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label" for="Uri">Uri</label>
+                <input class="form-control" type="text" asp-for="Uri">
+                <span asp-validation-for="Uri" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label" for="Price">Price</label>
+                <input class="form-control" type="number" asp-for="Price">
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label" for="Type">Type</label>
+                <select class="form-control" id="Type" name="Type" asp-items="Html.GetEnumSelectList<ProductType>()">
+                    <option selected value=0>Chose product type</option>
+                </select>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <input type="submit" value="Create" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    } 
+}
