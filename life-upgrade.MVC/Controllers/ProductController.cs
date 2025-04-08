@@ -1,9 +1,11 @@
-using LifeUpgrade.Application.Product;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Application.Product.Queries.GetAllProducts;
 using LifeUpgrade.Application.Product.Queries.GetProductByEncodedName;
+using LifeUpgrade.MVC.Extensions;
+using LifeUpgrade.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace LifeUpgrade.MVC.Controllers;
 
@@ -43,7 +45,10 @@ public class ProductController : Controller
         {
             return View(command);
         }
-        await _mediator.Send(command);
-        return RedirectToAction(nameof(Create));
+        // await _mediator.Send(command);
+        
+        this.SetNotification("success", $"Product: {command.Name} created successfully");
+        
+        return RedirectToAction(nameof(Index));
     }
 }
