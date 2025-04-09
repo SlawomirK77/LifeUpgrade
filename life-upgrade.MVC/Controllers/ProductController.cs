@@ -1,6 +1,8 @@
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Application.Product.Queries.GetAllProducts;
 using LifeUpgrade.Application.Product.Queries.GetProductByEncodedName;
+using LifeUpgrade.Application.WebShop.Commands;
+using LifeUpgrade.Application.WebShop.Queries;
 using LifeUpgrade.MVC.Extensions;
 using LifeUpgrade.MVC.Models;
 using MediatR;
@@ -50,5 +52,26 @@ public class ProductController : Controller
         this.SetNotification("success", $"Product: {command.Name} created successfully");
         
         return RedirectToAction(nameof(Index));
+    }
+    
+    [HttpPost]
+    [Route("Product/WebShop")]
+    public async Task<IActionResult> CreateWebShop(CreateWebShopCommand command)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        await _mediator.Send(command);
+        
+        return Ok();
+    }
+
+    [HttpGet]
+    [Route("Product/{encodedName}/WebShop")]
+    public async Task<IActionResult> GetProductWebShops(string encodedName)
+    {
+        var data = await _mediator.Send(new GetProductWebShopsQuery(){EncodedName = encodedName});
+        return Ok(data);
     }
 }
