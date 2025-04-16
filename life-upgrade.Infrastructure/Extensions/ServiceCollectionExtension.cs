@@ -16,6 +16,8 @@ public static class ServiceCollectionExtension
             configuration.GetConnectionString("LifeUpgradeSqlServer")));
 
         services.AddScoped<ProductSeeder>();
+        
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IWebShopRepository, WebShopRepository>();
     }
 }

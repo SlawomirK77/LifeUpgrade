@@ -9,5 +9,7 @@ public class Product
     public ProductDetails Details { get; set; } = default!;
         
     public string EncodedName { get; private set; } = default!;
+
+    public List<WebShop> WebShops { get; set; } = [];
     public void EncodeName() => EncodedName = Name.ToLower().Replace(" ", "-");
 }
