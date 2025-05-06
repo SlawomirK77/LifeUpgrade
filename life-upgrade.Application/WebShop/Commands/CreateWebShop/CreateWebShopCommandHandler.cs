@@ -1,7 +1,7 @@
 using LifeUpgrade.Domain.Interfaces;
 using MediatR;
 
-namespace LifeUpgrade.Application.WebShop.Commands;
+namespace LifeUpgrade.Application.WebShop.Commands.CreateWebShop;
 
 public class CreateWebShopCommandHandler : IRequestHandler<CreateWebShopCommand>
 {
@@ -21,7 +21,7 @@ public class CreateWebShopCommandHandler : IRequestHandler<CreateWebShopCommand>
         {
             Name = request.Name,
             Country = request.Country,
-            ProductId = product.Id,
+            ProductId = product!.Id,
         };
         
         await _webShopRepository.Create(webShop);

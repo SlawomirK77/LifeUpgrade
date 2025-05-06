@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace LifeUpgrade.Application.WebShop.Commands;
+namespace LifeUpgrade.Application.WebShop.Commands.CreateWebShop;
 
 public class CreateWebShopCommand : WebShopDto, IRequest
 {

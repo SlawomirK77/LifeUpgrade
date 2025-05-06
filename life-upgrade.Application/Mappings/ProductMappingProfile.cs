@@ -1,4 +1,5 @@
 using AutoMapper;
+using LifeUpgrade.Application.Photo.Commands;
 using LifeUpgrade.Application.Product;
 using LifeUpgrade.Application.WebShop;
 using LifeUpgrade.Domain.Entities;
@@ -19,6 +20,9 @@ public class ProductMappingProfile : Profile
             .ForMember(dto => dto.Type, opt => opt.MapFrom(src => src.Details.Type));
         
         CreateMap<WebShopDto, Domain.Entities.WebShop>()
+            .ReverseMap();
+        
+        CreateMap<Domain.Entities.Photo, PhotoDto>()
             .ReverseMap();
     }
 }

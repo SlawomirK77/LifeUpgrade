@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using LifeUpgrade.Application.Photo.Commands;
 using LifeUpgrade.Domain.Entities;
 
 namespace LifeUpgrade.Application.Product;
@@ -9,5 +10,6 @@ public class ProductDto
     public Uri Uri { get; set; } = default!;
     public decimal Price { get; set; }
     public List<ProductType> Type { get; set; } = [];
+    public List<PhotoDto> Photos { get; set; } = [];
     public string? EncodedName { get; set; }
 }
