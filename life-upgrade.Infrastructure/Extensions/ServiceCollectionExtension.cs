@@ -19,5 +19,6 @@ public static class ServiceCollectionExtension
         
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IWebShopRepository, WebShopRepository>();
+        services.AddScoped<IPhotoRepository, PhotoRepository>();
     }
 }

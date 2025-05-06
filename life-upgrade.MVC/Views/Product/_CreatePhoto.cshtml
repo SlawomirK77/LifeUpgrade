@@ -1,31 +1,31 @@
-@model LifeUpgrade.Application.WebShop.Commands.CreateWebShop.CreateWebShopCommand
+@model LifeUpgrade.MVC.Models.CreatePhoto
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addWebShopModal">
-    Add Web Shop
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPhotoModal">
+    Add Photo
 </button>
 
-<div class="modal fade" id="addWebShopModal" tabindex="-1" aria-labelledby="addWebShopModalLabel" aria-hidden="true">
+<div class="modal fade" id="addPhotoModal" tabindex="-1" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form asp-action="CreateWebShop">
+            <form asp-action="CreatePhoto" enctype="multipart/form-data" method="post">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="addWebShopModalLabel">Add Web Shop</h1>
+                    <h1 class="modal-title fs-5" id="addPhotoModalLabel">Add Photo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <input asp-for="ProductEncodedName" class="form-control" type="hidden"/>
-
+                    
                     <div class="form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control"/>
-                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <label asp-for="ImageFile" class="control-label">ImageFile</label>
+                        <input asp-for="ImageFile" class="form-control" type="file"/>
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Country" class="control-label"></label>
-                        <input asp-for="Country" class="form-control"/>
-                        <span asp-validation-for="Country" class="text-danger"></span>
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control"/>
+                        <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="modal-footer">

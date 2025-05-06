@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace LifeUpgrade.Application.WebShop.Commands;
+namespace LifeUpgrade.Application.WebShop.Commands.CreateWebShop;
 
 public class CreateWebShopCommandValidator : AbstractValidator<CreateWebShopCommand>
 {

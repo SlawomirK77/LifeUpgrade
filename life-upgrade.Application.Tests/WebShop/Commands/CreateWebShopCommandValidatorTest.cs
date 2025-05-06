@@ -1,5 +1,6 @@
 using FluentValidation.TestHelper;
 using LifeUpgrade.Application.WebShop.Commands;
+using LifeUpgrade.Application.WebShop.Commands.CreateWebShop;
 using Xunit;
 
 namespace life_upgrade.Application.Tests.WebShop.Commands;
