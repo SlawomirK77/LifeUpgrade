@@ -7,8 +7,8 @@ public class CreatePhotoCommandValidator : AbstractValidator<CreatePhotoCommand>
 {
     public CreatePhotoCommandValidator()
     {
-        // RuleFor(x => x.Bytes).NotNull();
-        // RuleFor(x => x.FileExtension).NotEmpty();
-        // RuleFor(x => x.ProductEncodedName).NotEmpty().NotNull();
+        RuleFor(x => x.Bytes).NotNull();
+        RuleFor(x => x.FileExtension).NotEmpty();
+        RuleFor(x => x.ProductEncodedName).NotEmpty().NotNull();
     }
 }
