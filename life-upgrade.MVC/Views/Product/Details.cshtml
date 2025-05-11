@@ -38,7 +38,7 @@
     <partial name="_CreateWebShop" model="new CreateWebShopCommand(){ProductEncodedName=Model.EncodedName!}"/>
     <partial name="_CreatePhoto" model="new CreatePhoto(){ProductEncodedName=Model.EncodedName!}"/>
     <br/>
-    @* <a asp-action="Edit" asp-route-id="#">Edit</a> | *@
+    <a class="btn btn-outline-secondary" asp-controller="Product" asp-action="Edit" asp-route-encodedName="@Model.EncodedName">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
 

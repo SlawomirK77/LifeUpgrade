@@ -1,6 +1,8 @@
+using AutoMapper;
 using LifeUpgrade.Application.Photo.Commands.CreatePhoto;
 using LifeUpgrade.Application.Photo.Queries.GetPhotosByProductEncodedName;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
+using LifeUpgrade.Application.Product.Commands.EditProduct;
 using LifeUpgrade.Application.Product.Queries.GetAllProducts;
 using LifeUpgrade.Application.Product.Queries.GetProductByEncodedName;
 using LifeUpgrade.Application.WebShop.Commands.CreateWebShop;
@@ -18,11 +20,13 @@ public class ProductController : Controller
 {
     private readonly ILogger<ProductController> _logger;
     private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
 
-    public ProductController(ILogger<ProductController> logger, IMediator mediator)
+    public ProductController(ILogger<ProductController> logger, IMediator mediator, IMapper mapper)
     {
         _logger = logger;
         _mediator = mediator;
+        _mapper = mapper;
     }
     
     public async Task<IActionResult> Index()
@@ -35,7 +39,33 @@ public class ProductController : Controller
     public async Task<IActionResult> Details(string encodedName)
     {
         var dto = await _mediator.Send(new GetProductByEncodedNameQuery(encodedName));
+        
         return View(dto);
+    }
+    
+    [Route("Product/{encodedName}/Edit")]
+    public async Task<IActionResult> Edit(string encodedName)
+    {
+        var dto = await _mediator.Send(new GetProductByEncodedNameQuery(encodedName));
+        
+        EditProductCommand model = _mapper.Map<EditProductCommand>(dto);
+        
+        return View(model);
+    }
+    
+    [HttpPost]
+    [Route("Product/{encodedName}/Edit")]
+    public async Task<IActionResult> Edit(string encodedName, EditProductCommand command)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(command);
+        }
+        await _mediator.Send(command);
+        
+        this.SetNotification("success", $"Product: {command.Name} edited successfully");
+        
+        return RedirectToAction(nameof(Index));
     }
 
     [Authorize]

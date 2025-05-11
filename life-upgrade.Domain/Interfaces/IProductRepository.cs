@@ -8,4 +8,5 @@ public interface IProductRepository
     Task<Domain.Entities.Product?> GetByName(string name);
     Task<IEnumerable<Domain.Entities.Product>> GetAll();
     Task<Domain.Entities.Product?> GetByEncodedName(string encodedName);
+    Task Commit();
 }
