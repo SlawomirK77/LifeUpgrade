@@ -27,4 +27,7 @@ public class ProductRepository : IProductRepository
 
     public Task<Product?> GetByEncodedName(string encodedName)
         => _dbContext.Products.FirstOrDefaultAsync(p => p.EncodedName == encodedName);
+
+    public Task Commit()
+        => _dbContext.SaveChangesAsync();
 }
