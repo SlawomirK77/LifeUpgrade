@@ -12,4 +12,5 @@ public class ProductDto
     public List<ProductType> Type { get; set; } = [];
     public List<PhotoDto> Photos { get; set; } = [];
     public string? EncodedName { get; set; }
+    public bool IsEditable { get; set; }
 }

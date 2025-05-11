@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LifeUpgrade.Infrastructure.Persistence;
 
-public class LifeUpgradeDbContext : DbContext
+public class LifeUpgradeDbContext : IdentityDbContext
 {
     public LifeUpgradeDbContext(DbContextOptions<LifeUpgradeDbContext> options) : base(options)
     {
@@ -15,6 +16,8 @@ public class LifeUpgradeDbContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        
         modelBuilder.Entity<Domain.Entities.Product>()
             .OwnsOne(p => p.Details);
         

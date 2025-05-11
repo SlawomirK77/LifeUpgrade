@@ -8,6 +8,7 @@ using LifeUpgrade.Application.WebShop.Queries;
 using LifeUpgrade.MVC.Extensions;
 using LifeUpgrade.MVC.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 
@@ -37,13 +38,15 @@ public class ProductController : Controller
         return View(dto);
     }
 
+    [Authorize]
     public IActionResult Create()
     {
         return View();
     }
     
     [HttpPost]
-    public async Task<IActionResult> Create(CreateProductCommand command)
+    [Authorize]
+    public async Task<IActionResult> Create(CreateProductCommand command) 
     {
         if (!ModelState.IsValid)
         {
@@ -57,6 +60,7 @@ public class ProductController : Controller
     }
     
     [HttpPost]
+    [Authorize]
     [Route("Product/WebShop")]
     public async Task<IActionResult> CreateWebShop(CreateWebShopCommand command)
     {
@@ -78,6 +82,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
+    [Authorize]
     [Route("Product/Photo")]
     public async Task<IActionResult> CreatePhoto(CreatePhoto photo)
     {
