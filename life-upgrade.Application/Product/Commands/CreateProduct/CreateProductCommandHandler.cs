@@ -19,11 +19,19 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand>
     }
     public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
+        var currentUser = _userContext.GetCurrentUser();
+        if (currentUser == null || !currentUser.IsInRole("User"))
+        {
+            return;
+        }
         var product = _mapper.Map<Domain.Entities.Product>(request);
         product.EncodeName();
-        product.Details = new Domain.Entities.ProductDetails();
+        product.Details = new Domain.Entities.ProductDetails
+        {
+            CreatedById = currentUser.Id,
+            Type = request.Type
+        };
 
-        product.Details.CreatedById = _userContext.GetCurrentUser().Id;
         await _productRepository.Create(product);
     }
 }

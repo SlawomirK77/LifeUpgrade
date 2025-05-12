@@ -1,10 +1,13 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using FluentAssertions;
 using JetBrains.Annotations;
+using LifeUpgrade.Application.ApplicationUser;
 using LifeUpgrade.Application.Mappings;
 using LifeUpgrade.Application.Product;
 using LifeUpgrade.Domain.Entities;
+using Moq;
 using Xunit;
 
 namespace life_upgrade.Application.Tests.Mappings;
@@ -16,8 +19,12 @@ public class ProductMappingProfileTest
     [Fact]
     public void MappingProfile_ShouldMapProductDtoToProduct()
     {
+        var userContextMock = new Mock<IUserContext>();
+        userContextMock
+            .Setup(c => c.GetCurrentUser())
+            .Returns(new CurrentUser("string_id", "test@EmailAddressAttribute.com", ["Owner"]));
         var configuration = new MapperConfiguration(cfg =>
-            cfg.AddProfile(new ProductMappingProfile()));
+            cfg.AddProfile(new ProductMappingProfile(userContextMock.Object)));
         var mapper = configuration.CreateMapper();
         var dto = new ProductDto
         {
@@ -33,9 +40,12 @@ public class ProductMappingProfileTest
 
     [Fact]
     public void MappingProfile_ShouldMapProductToProductDto()
-    {
+    {var userContextMock = new Mock<IUserContext>();
+        userContextMock
+            .Setup(c => c.GetCurrentUser())
+            .Returns(new CurrentUser("string_id", "test@EmailAddressAttribute.com", ["Owner"]));
         var configuration = new MapperConfiguration(cfg =>
-            cfg.AddProfile(new ProductMappingProfile()));
+            cfg.AddProfile(new ProductMappingProfile(userContextMock.Object)));
         var mapper = configuration.CreateMapper();
         var product = new Product
         {

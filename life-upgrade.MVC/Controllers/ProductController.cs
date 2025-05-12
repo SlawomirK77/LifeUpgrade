@@ -47,6 +47,11 @@ public class ProductController : Controller
     public async Task<IActionResult> Edit(string encodedName)
     {
         var dto = await _mediator.Send(new GetProductByEncodedNameQuery(encodedName));
+
+        if (!dto.IsEditable)
+        {
+            return RedirectToAction("NoAccess", "Home");
+        }
         
         EditProductCommand model = _mapper.Map<EditProductCommand>(dto);
         
@@ -68,7 +73,7 @@ public class ProductController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [Authorize]
+    [Authorize(Roles = "User")]
     public IActionResult Create()
     {
         return View();

@@ -17,6 +17,7 @@ public static class ServiceCollectionExtension
             configuration.GetConnectionString("LifeUpgradeSqlServer")));
 
         services.AddDefaultIdentity<IdentityUser>()
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<LifeUpgradeDbContext>();
 
         services.AddScoped<ProductSeeder>();

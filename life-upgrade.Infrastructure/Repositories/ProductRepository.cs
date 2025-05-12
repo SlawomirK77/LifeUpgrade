@@ -1,6 +1,7 @@
 using LifeUpgrade.Domain.Entities;
 using LifeUpgrade.Domain.Interfaces;
 using LifeUpgrade.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LifeUpgrade.Infrastructure.Repositories;

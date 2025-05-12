@@ -21,8 +21,10 @@ public class ProductMappingProfile : Profile
             }));
 
         CreateMap<Domain.Entities.Product, ProductDto>()
-            .ForMember(dto => dto.Type, opt => opt.MapFrom(src => src.Details.Type))
-            .ForMember(dto => dto.IsEditable, opt => opt.MapFrom(src => src.Details.CreatedById == user.Id));
+            .ForMember(dto => dto.Type, opt =>
+                opt.MapFrom(src => src.Details.Type))
+            .ForMember(dto => dto.IsEditable, opt =>
+                opt.MapFrom(src => user != null && src.Details.CreatedById == user.Id));
         
         CreateMap<WebShopDto, Domain.Entities.WebShop>()
             .ReverseMap();
