@@ -10,6 +10,7 @@ using LifeUpgrade.Application.WebShop.Queries;
 using LifeUpgrade.MVC.Extensions;
 using LifeUpgrade.MVC.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 
@@ -46,6 +47,11 @@ public class ProductController : Controller
     public async Task<IActionResult> Edit(string encodedName)
     {
         var dto = await _mediator.Send(new GetProductByEncodedNameQuery(encodedName));
+
+        if (!dto.IsEditable)
+        {
+            return RedirectToAction("NoAccess", "Home");
+        }
         
         EditProductCommand model = _mapper.Map<EditProductCommand>(dto);
         
@@ -67,13 +73,15 @@ public class ProductController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "User")]
     public IActionResult Create()
     {
         return View();
     }
     
     [HttpPost]
-    public async Task<IActionResult> Create(CreateProductCommand command)
+    [Authorize]
+    public async Task<IActionResult> Create(CreateProductCommand command) 
     {
         if (!ModelState.IsValid)
         {
@@ -87,6 +95,7 @@ public class ProductController : Controller
     }
     
     [HttpPost]
+    [Authorize]
     [Route("Product/WebShop")]
     public async Task<IActionResult> CreateWebShop(CreateWebShopCommand command)
     {
@@ -108,6 +117,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
+    [Authorize]
     [Route("Product/Photo")]
     public async Task<IActionResult> CreatePhoto(CreatePhoto photo)
     {
