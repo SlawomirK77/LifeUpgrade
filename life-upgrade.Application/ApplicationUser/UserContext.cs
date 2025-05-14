@@ -1,11 +1,12 @@
 using System.Security.Claims;
+using LifeUpgrade.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 
 namespace LifeUpgrade.Application.ApplicationUser
 {
     public interface IUserContext
     {
-        CurrentUser? GetCurrentUser();
+        Domain.Entities.ApplicationUser? GetCurrentUser();
     }
 
 
@@ -19,7 +20,7 @@ namespace LifeUpgrade.Application.ApplicationUser
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public CurrentUser? GetCurrentUser()
+        public Domain.Entities.ApplicationUser? GetCurrentUser()
         {
             var user = _httpContextAccessor.HttpContext?.User;
             if (user == null)
@@ -32,11 +33,11 @@ namespace LifeUpgrade.Application.ApplicationUser
                 return null;
             }
 
-            var id = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            var id = Guid.Parse((ReadOnlySpan<char>)user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
             var email = user.FindFirst(c => c.Type == ClaimTypes.Email)!.Value;
             var roles = user.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value);
 
-            return new CurrentUser(id, email, roles);
+            return new Domain.Entities.ApplicationUser(id, email, roles);
         }
     }
 }

@@ -1,3 +1,4 @@
+@using LifeUpgrade.Application.ProductRating.Commands.CreateProductRating
 @using LifeUpgrade.Application.WebShop.Commands.CreateWebShop
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model LifeUpgrade.Application.Product.ProductDto
@@ -31,7 +32,9 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        
+        <div class="container">
+            <partial name="_CreateProductRating" model="new CreateOrEditProductRatingCommand(){ProductEncodedName=Model.EncodedName!}"/>
+        </div>
     </dl>
 </div>
 <div>

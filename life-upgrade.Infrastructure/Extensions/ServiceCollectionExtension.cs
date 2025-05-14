@@ -1,3 +1,4 @@
+using LifeUpgrade.Domain.Entities;
 using LifeUpgrade.Domain.Interfaces;
 using LifeUpgrade.Infrastructure.Persistence;
 using LifeUpgrade.Infrastructure.Repositories;
@@ -16,8 +17,8 @@ public static class ServiceCollectionExtension
         services.AddDbContext<LifeUpgradeDbContext>(options => options.UseSqlServer(
             configuration.GetConnectionString("LifeUpgradeSqlServer")));
 
-        services.AddDefaultIdentity<IdentityUser>()
-            .AddRoles<IdentityRole>()
+        services.AddDefaultIdentity<ApplicationUser>()
+            .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<LifeUpgradeDbContext>();
 
         services.AddScoped<ProductSeeder>();
@@ -25,5 +26,8 @@ public static class ServiceCollectionExtension
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IWebShopRepository, WebShopRepository>();
         services.AddScoped<IPhotoRepository, PhotoRepository>();
+        services.AddScoped<IProductRatingRepository, ProductRatingRepository>();
+
+        services.AddScoped<UserManager<ApplicationUser>>();
     }
 }

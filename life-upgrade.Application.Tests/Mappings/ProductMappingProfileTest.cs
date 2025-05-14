@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using FluentAssertions;
 using JetBrains.Annotations;
@@ -22,7 +21,7 @@ public class ProductMappingProfileTest
         var userContextMock = new Mock<IUserContext>();
         userContextMock
             .Setup(c => c.GetCurrentUser())
-            .Returns(new CurrentUser("string_id", "test@EmailAddressAttribute.com", ["Owner"]));
+            .Returns(new ApplicationUser(Guid.Parse("guid_id"), "test@EmailAddressAttribute.com", ["Owner"]));
         var configuration = new MapperConfiguration(cfg =>
             cfg.AddProfile(new ProductMappingProfile(userContextMock.Object)));
         var mapper = configuration.CreateMapper();
@@ -43,7 +42,7 @@ public class ProductMappingProfileTest
     {var userContextMock = new Mock<IUserContext>();
         userContextMock
             .Setup(c => c.GetCurrentUser())
-            .Returns(new CurrentUser("string_id", "test@EmailAddressAttribute.com", ["Owner"]));
+            .Returns(new ApplicationUser(Guid.Parse("guid_id"), "test@EmailAddressAttribute.com", ["Owner"]));
         var configuration = new MapperConfiguration(cfg =>
             cfg.AddProfile(new ProductMappingProfile(userContextMock.Object)));
         var mapper = configuration.CreateMapper();
