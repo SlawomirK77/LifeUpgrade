@@ -1,7 +1,10 @@
 @using LifeUpgrade.Application.ProductRating.Commands.CreateProductRating
 @using LifeUpgrade.Application.WebShop.Commands.CreateWebShop
+@using LifeUpgrade.Domain.Entities
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model LifeUpgrade.Application.Product.ProductDto
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
@@ -47,6 +50,7 @@
 
 <div id="webshops" class="row" data-encoded-name="@Model.EncodedName"></div>
 <div id="photos" class="row" data-encoded-name="@Model.EncodedName"></div>
+<div id="rating" class="row" data-encoded-name="@Model.EncodedName" data-user-id="@UserManager.GetUserId(User)"></div>
 
 @section Scripts{
     <script src="~/js/Product/Details.js"></script>

@@ -2,6 +2,7 @@ $(document).ready(function(){
     
     LoadProductWebShops();
     LoadProductPhotos();
+    LoadProductRating();
     
     $("#addWebShopModal form").submit(function (event) {
         event.preventDefault();
@@ -49,7 +50,7 @@ $(document).ready(function(){
                 this.style.transform = 'scale(1)';
             }, 200);
             let formData = new FormData(document.querySelector("#ratingForm"));
-            formData.set("Rating", event.currentTarget.control.value);
+            formData.set("rating", event.currentTarget.control.value);
 
             $.ajax({
                 url: "/Product/Rating",
@@ -59,6 +60,7 @@ $(document).ready(function(){
                 contentType: false,
                 success: function () {
                     toastr["success"]("Product rated successfully")
+                    LoadProductRating();
                 },
                 error: function () {
                     toastr["error"]("Something went wrong with product rating")

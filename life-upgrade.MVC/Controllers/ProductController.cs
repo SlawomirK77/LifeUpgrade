@@ -157,7 +157,7 @@ public class ProductController : Controller
     }
 
     [HttpGet]
-    [Authorize]
+    // [Authorize]
     [Route("Product/{encodedName}/Rating")]
     public async Task<IActionResult> GetProductRatings(string encodedName)
     {
