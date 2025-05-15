@@ -1,3 +1,7 @@
+.rating-form-container {
+    display: flex;
+}
+
 .star-rating {
     direction: rtl;
     display: inline-block;

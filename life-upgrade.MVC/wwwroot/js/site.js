@@ -72,12 +72,12 @@ const RenderProductRating = (ratings, userId, container) => {
     let userRating = ratings.find(x => x.userId === userId)?.rating ?? null;
     if (userRating)
     {
-        $("#ratingForm")[0].getElementsByTagName("input").namedItem("star" + userRating).checked = true;    
+        $("#rating-form")[0].getElementsByTagName("input").namedItem("star" + userRating).checked = true;    
     }
-    
-    container.append(`
-            <div class="card border-secondary mb-3" style="max-width: 6rem;">
-                    <h5 class="card-title">${rating}</h5>
+
+    $("#rating-form").append(`
+            <div style="max-width: 6rem;">
+                    <h5 >(${rating})</h5>
             </div>`)
 }
 
