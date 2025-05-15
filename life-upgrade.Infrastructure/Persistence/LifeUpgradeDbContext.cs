@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LifeUpgrade.Infrastructure.Persistence;
 
-public class LifeUpgradeDbContext : IdentityDbContext
+public class LifeUpgradeDbContext : IdentityDbContext<Domain.Entities.ApplicationUser, IdentityRole<Guid>, Guid>
 {
     public LifeUpgradeDbContext(DbContextOptions<LifeUpgradeDbContext> options) : base(options)
     {
@@ -13,6 +14,7 @@ public class LifeUpgradeDbContext : IdentityDbContext
     public DbSet<Domain.Entities.Product> Products { get; set; }
     public DbSet<Domain.Entities.WebShop> WebShops { get; set; }
     public DbSet<Domain.Entities.Photo> Photos { get; set; }
+    public DbSet<Domain.Entities.ProductRating> ProductRatings { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,5 +32,7 @@ public class LifeUpgradeDbContext : IdentityDbContext
             .HasMany(p => p.Photos)
             .WithOne(ph => ph.Product)
             .HasForeignKey(ph => ph.ProductId);
+        
+        
     }
 }

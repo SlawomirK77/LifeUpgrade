@@ -11,5 +11,6 @@ public class Product
     public string EncodedName { get; private set; } = default!;
 
     public List<WebShop> WebShops { get; set; } = default!;
+    public List<ProductRating> ProductRatings { get; set; } = default!;
     public void EncodeName() => EncodedName = Name.ToLower().Replace(" ", "-");
 }

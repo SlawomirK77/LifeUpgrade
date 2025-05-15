@@ -2,6 +2,7 @@ $(document).ready(function(){
     
     LoadProductWebShops();
     LoadProductPhotos();
+    LoadProductRating();
     
     $("#addWebShopModal form").submit(function (event) {
         event.preventDefault();
@@ -22,7 +23,7 @@ $(document).ready(function(){
 
     $("#addPhotoModal form").submit(function (event) {
         event.preventDefault();
-        var formData = new FormData(this);
+        let formData = new FormData(this);
 
         $.ajax({
             url: $(this).attr('action'),
@@ -40,5 +41,31 @@ $(document).ready(function(){
                 toastr["error"]("Something went wrong")
             }
         })
+    });
+
+    document.querySelectorAll('.star-rating:not(.readonly) label').forEach(star => {
+        star.addEventListener('click', function(event) {
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+            let formData = new FormData(document.querySelector("#ratingForm"));
+            formData.set("rating", event.currentTarget.control.value);
+
+            $.ajax({
+                url: "/Product/Rating",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    toastr["success"]("Product rated successfully")
+                    LoadProductRating();
+                },
+                error: function () {
+                    toastr["error"]("Something went wrong with product rating")
+                }
+            })
+        });
     });
 });

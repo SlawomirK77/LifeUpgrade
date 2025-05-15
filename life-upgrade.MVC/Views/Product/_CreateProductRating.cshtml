@@ -1,0 +1,28 @@
+@model LifeUpgrade.Application.ProductRating.Commands.CreateProductRating.CreateOrEditProductRatingCommand
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="~/css/rating.css" asp-append-version="true"/>
+
+<div class="col-md-6">
+    <div class="rating-card p-4">
+        <form asp-action="CreateRating" method="post" id="rating-form" class="rating-form-container">
+            <div class="star-rating animated-stars" id="star-container">
+                <input type="radio" id="star5" name="rating" value="5">
+                <label for="star5" class="bi bi-star-fill"></label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" class="bi bi-star-fill"></label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" class="bi bi-star-fill"></label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" class="bi bi-star-fill"></label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" class="bi bi-star-fill"></label>
+                <input asp-for="ProductEncodedName" class="form-control" type="hidden"/>
+            </div>
+        </form>
+        </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

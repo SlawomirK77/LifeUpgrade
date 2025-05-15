@@ -1,6 +1,10 @@
+@using LifeUpgrade.Application.ProductRating.Commands.CreateProductRating
 @using LifeUpgrade.Application.WebShop.Commands.CreateWebShop
+@using LifeUpgrade.Domain.Entities
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model LifeUpgrade.Application.Product.ProductDto
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
@@ -31,7 +35,9 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
-        
+        <div class="container">
+            <partial name="_CreateProductRating" model="new CreateOrEditProductRatingCommand(){ProductEncodedName=Model.EncodedName!}"/>
+        </div>
     </dl>
 </div>
 <div>
@@ -44,6 +50,7 @@
 
 <div id="webshops" class="row" data-encoded-name="@Model.EncodedName"></div>
 <div id="photos" class="row" data-encoded-name="@Model.EncodedName"></div>
+<div id="rating" class="row" data-encoded-name="@Model.EncodedName" data-user-id="@UserManager.GetUserId(User)"></div>
 
 @section Scripts{
     <script src="~/js/Product/Details.js"></script>

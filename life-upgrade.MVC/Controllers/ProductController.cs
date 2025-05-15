@@ -5,6 +5,8 @@ using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Application.Product.Commands.EditProduct;
 using LifeUpgrade.Application.Product.Queries.GetAllProducts;
 using LifeUpgrade.Application.Product.Queries.GetProductByEncodedName;
+using LifeUpgrade.Application.ProductRating.Commands.CreateProductRating;
+using LifeUpgrade.Application.ProductRating.Queries.GetRatingsByProductEncodedName;
 using LifeUpgrade.Application.WebShop.Commands.CreateWebShop;
 using LifeUpgrade.Application.WebShop.Queries;
 using LifeUpgrade.MVC.Extensions;
@@ -151,7 +153,29 @@ public class ProductController : Controller
     public async Task<IActionResult> GetProductPhotos(string encodedName)
     {
         var data = await _mediator.Send(new GetPhotosByProductEncodedNameQuery(){EncodedName = encodedName });
-        var photos =  new FileStreamResult(new MemoryStream(data.First().Bytes), new MediaTypeHeaderValue("application/octet-stream"));        
         return Ok(data);
+    }
+
+    [HttpGet]
+    // [Authorize]
+    [Route("Product/{encodedName}/Rating")]
+    public async Task<IActionResult> GetProductRatings(string encodedName)
+    {
+        var data = await _mediator.Send(new GetRatingsByProductEncodedNameQuery(){EncodedName = encodedName});
+        return Ok(data);
+    }
+    
+    [HttpPost]
+    // [Authorize]
+    [Route("Product/Rating")]
+    public async Task<IActionResult> CreateRating(CreateOrEditProductRatingCommand command)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        await _mediator.Send(command);
+        return Ok();
     }
 }

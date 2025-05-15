@@ -3,6 +3,8 @@ using LifeUpgrade.Application.ApplicationUser;
 using LifeUpgrade.Application.Photo.Commands;
 using LifeUpgrade.Application.Product;
 using LifeUpgrade.Application.Product.Commands.EditProduct;
+using LifeUpgrade.Application.ProductRating;
+using LifeUpgrade.Application.ProductRating.Commands.CreateProductRating;
 using LifeUpgrade.Application.WebShop;
 using LifeUpgrade.Domain.Entities;
 
@@ -33,5 +35,10 @@ public class ProductMappingProfile : Profile
             .ReverseMap();
 
         CreateMap<ProductDto, EditProductCommand>();
+
+        CreateMap<Domain.Entities.ProductRating, ProductRatingDto>()
+            .ReverseMap();
+
+        CreateMap<ProductRatingDto, CreateOrEditProductRatingCommand>();
     }
 }
