@@ -69,13 +69,15 @@ const LoadProductPhotos = () => {
 const RenderProductRating = (ratings, userId, container) => {
     container.empty();
     let rating = ratings.reduce((sum, summand) => sum + summand.rating, 0)/ratings.length;
-    let userRating = ratings.find(x => x.userId === userId)?.rating ?? "no rating";
-    $("#ratingForm")[0].getElementsByTagName("input").namedItem("star" + userRating).checked = true;
+    let userRating = ratings.find(x => x.userId === userId)?.rating ?? null;
+    if (userRating)
+    {
+        $("#ratingForm")[0].getElementsByTagName("input").namedItem("star" + userRating).checked = true;    
+    }
     
     container.append(`
             <div class="card border-secondary mb-3" style="max-width: 6rem;">
                     <h5 class="card-title">${rating}</h5>
-                    <h5 class="card-title">${userRating}</h5>
             </div>`)
 }
 
