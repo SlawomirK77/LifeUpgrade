@@ -4,7 +4,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using LifeUpgrade.Application.ApplicationUser;
 using LifeUpgrade.Application.Mappings;
-using LifeUpgrade.Application.Product;
+using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LifeUpgrade.Application.Extensions;
