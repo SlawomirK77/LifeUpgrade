@@ -1,4 +1,6 @@
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
 using LifeUpgrade.Application.Photo.Commands.CreatePhoto;
 using LifeUpgrade.Application.Photo.Queries.GetPhotosByProductEncodedName;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
@@ -14,7 +16,6 @@ using LifeUpgrade.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 
 namespace LifeUpgrade.MVC.Controllers;
 
@@ -23,12 +24,14 @@ public class ProductController : Controller
     private readonly ILogger<ProductController> _logger;
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly IValidator<CreatePhotoCommand> _validator;
 
-    public ProductController(ILogger<ProductController> logger, IMediator mediator, IMapper mapper)
+    public ProductController(ILogger<ProductController> logger, IMediator mediator, IMapper mapper, IValidator<CreatePhotoCommand> validator)
     {
         _logger = logger;
         _mediator = mediator;
         _mapper = mapper;
+        _validator = validator;
     }
     
     public async Task<IActionResult> Index()
@@ -134,14 +137,22 @@ public class ProductController : Controller
 
             if (memoryStream.Length is < 2000000 and > 0)
             {
-                await _mediator.Send(new CreatePhotoCommand
+                var command = new CreatePhotoCommand
                 {
                     Bytes = memoryStream.ToArray(),
                     Description = photo.Description,
                     FileExtension = photo.ImageFile.FileName[(photo.ImageFile.FileName.LastIndexOf('.') + 1)..],
                     Size = memoryStream.Length,
                     ProductEncodedName = photo.ProductEncodedName,
-                });
+                };
+                var result = await _validator.ValidateAsync(command);
+
+                if (!result.IsValid)
+                {
+                    return BadRequest(result.Errors);
+                }
+                
+                await _mediator.Send(command);
             }
             else return BadRequest();
         }
@@ -157,7 +168,6 @@ public class ProductController : Controller
     }
 
     [HttpGet]
-    // [Authorize]
     [Route("Product/{encodedName}/Rating")]
     public async Task<IActionResult> GetProductRatings(string encodedName)
     {
@@ -166,7 +176,7 @@ public class ProductController : Controller
     }
     
     [HttpPost]
-    // [Authorize]
+    [Authorize]
     [Route("Product/Rating")]
     public async Task<IActionResult> CreateRating(CreateOrEditProductRatingCommand command)
     {
