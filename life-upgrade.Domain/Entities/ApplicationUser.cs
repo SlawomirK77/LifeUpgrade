@@ -16,6 +16,7 @@ public class ApplicationUser : IdentityUser<Guid>
     }
 
     public IEnumerable<string> Roles { get; set; } = [];
-    
+    [PersonalData]
+    public byte[] Image { get; set; }
     public bool IsInRole(string role) => Roles.Contains(role);
 }
