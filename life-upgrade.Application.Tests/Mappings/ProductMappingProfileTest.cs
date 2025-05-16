@@ -21,7 +21,7 @@ public class ProductMappingProfileTest
         var userContextMock = new Mock<IUserContext>();
         userContextMock
             .Setup(c => c.GetCurrentUser())
-            .Returns(new ApplicationUser(Guid.Parse("guid_id"), "test@EmailAddressAttribute.com", ["Owner"]));
+            .Returns(new ApplicationUser(Guid.Parse("c756af6b-c81b-45ea-94d1-720149740f2c"), "test@EmailAddressAttribute.com", ["Owner"]));
         var configuration = new MapperConfiguration(cfg =>
             cfg.AddProfile(new ProductMappingProfile(userContextMock.Object)));
         var mapper = configuration.CreateMapper();
@@ -42,7 +42,7 @@ public class ProductMappingProfileTest
     {var userContextMock = new Mock<IUserContext>();
         userContextMock
             .Setup(c => c.GetCurrentUser())
-            .Returns(new ApplicationUser(Guid.Parse("guid_id"), "test@EmailAddressAttribute.com", ["Owner"]));
+            .Returns(new ApplicationUser(Guid.Parse("c756af6b-c81b-45ea-94d1-720149740f2c"), "test@EmailAddressAttribute.com", ["Owner"]));
         var configuration = new MapperConfiguration(cfg =>
             cfg.AddProfile(new ProductMappingProfile(userContextMock.Object)));
         var mapper = configuration.CreateMapper();

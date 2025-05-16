@@ -3,7 +3,7 @@ using FluentValidation;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Domain.Interfaces;
 
-namespace LifeUpgrade.Application.Product;
+namespace LifeUpgrade.Application.Product.Commands.CreateProduct;
 
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {

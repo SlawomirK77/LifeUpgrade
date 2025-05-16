@@ -19,6 +19,9 @@ public class PhotoRepository : IPhotoRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task<Photo?> GetByBytes(byte[] bytes)
+        => await _dbContext.Photos.FirstOrDefaultAsync(x => x.Bytes == bytes);
+
     public async Task<IEnumerable<Photo>> GetPhotosByProductEncodedName(string encodedName)
     {
         var productId = _dbContext.Products.FirstOrDefaultAsync(x => x.EncodedName == encodedName).Result!.Id;
