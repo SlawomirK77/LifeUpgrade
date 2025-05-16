@@ -22,7 +22,7 @@ namespace LifeUpgrade.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("LifeUpgrade.Application.ApplicationUser.ApplicationUser", b =>
+            modelBuilder.Entity("LifeUpgrade.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,6 +41,10 @@ namespace LifeUpgrade.Infrastructure.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -368,7 +372,7 @@ namespace LifeUpgrade.Infrastructure.Migrations
 
                             b1.ToTable("Products");
 
-                            b1.HasOne("LifeUpgrade.Application.ApplicationUser.ApplicationUser", "CreatedBy")
+                            b1.HasOne("LifeUpgrade.Domain.Entities.ApplicationUser", "CreatedBy")
                                 .WithMany()
                                 .HasForeignKey("CreatedById");
 
@@ -411,7 +415,7 @@ namespace LifeUpgrade.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("LifeUpgrade.Application.ApplicationUser.ApplicationUser", null)
+                    b.HasOne("LifeUpgrade.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -420,7 +424,7 @@ namespace LifeUpgrade.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("LifeUpgrade.Application.ApplicationUser.ApplicationUser", null)
+                    b.HasOne("LifeUpgrade.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -435,7 +439,7 @@ namespace LifeUpgrade.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LifeUpgrade.Application.ApplicationUser.ApplicationUser", null)
+                    b.HasOne("LifeUpgrade.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -444,7 +448,7 @@ namespace LifeUpgrade.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("LifeUpgrade.Application.ApplicationUser.ApplicationUser", null)
+                    b.HasOne("LifeUpgrade.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

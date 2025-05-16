@@ -1,3 +1,4 @@
+using LifeUpgrade.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,5 @@ public class LifeUpgradeDbContext : IdentityDbContext<Domain.Entities.Applicatio
             .HasMany(p => p.Photos)
             .WithOne(ph => ph.Product)
             .HasForeignKey(ph => ph.ProductId);
-        
-        
     }
 }

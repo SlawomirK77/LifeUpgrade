@@ -1,6 +1,5 @@
 using AutoMapper;
 using FluentValidation;
-using FluentValidation.Results;
 using LifeUpgrade.Application.Photo.Commands.CreatePhoto;
 using LifeUpgrade.Application.Photo.Queries.GetPhotosByProductEncodedName;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
