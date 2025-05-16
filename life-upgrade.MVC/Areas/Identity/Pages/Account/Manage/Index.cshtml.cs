@@ -28,7 +28,7 @@ namespace LifeUpgrade.MVC.Areas.Identity.Pages.Account.Manage
         public string Username { get; set; }
         [TempData]
         public string StatusMessage { get; set; }
-        public byte[] UserImage { get; set; }
+        public string UserImage { get; set; }
         [BindProperty]
         public InputModel Input { get; set; }
         public class InputModel
@@ -46,7 +46,7 @@ namespace LifeUpgrade.MVC.Areas.Identity.Pages.Account.Manage
             var userImage = _userManager.GetUserAsync(User).Result?.Image;
 
             Username = userName;
-            UserImage = userImage;
+            UserImage = Convert.ToBase64String(userImage);
 
             Input = new InputModel
             {
