@@ -38,7 +38,10 @@ public class ProductSeeder
             }
         }
 
-        await AddInitialUser();
+        if (!_dbContext.Users.Any())
+        {
+            await AddInitialUser();    
+        }
     }
 
     private async Task AddInitialUser()

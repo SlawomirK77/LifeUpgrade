@@ -1,8 +1,6 @@
 using LifeUpgrade.Application.Extensions;
 using LifeUpgrade.Infrastructure.Extensions;
-using LifeUpgrade.Infrastructure.Persistence;
 using LifeUpgrade.Infrastructure.Seeders;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

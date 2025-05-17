@@ -3,10 +3,17 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
-    {
+    {    
+        <li class="nav-item" style="align-self: center;">
+            @if (UserManager.GetUserAsync(User).Result?.Image != null)
+            {
+                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result!.Image))" alt="image"/>
+            }
+        </li>
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
         </li>
