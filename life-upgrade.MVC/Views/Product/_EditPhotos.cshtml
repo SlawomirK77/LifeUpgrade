@@ -1,0 +1,30 @@
+@model EditPhotos
+
+<link rel="stylesheet" href="~/css/selectable.css" asp-append-version="true"/>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPhotosModal">
+    Edit photos
+</button>
+
+<div class="modal fade" id="editPhotosModal" tabindex="-1" aria-labelledby="editPhotosModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editPhotosModalLabel">Image list</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @foreach (var item in Model.Photos)
+                {
+                    <img class="card-img-top selected" src="data:image/*;base64,@Convert.ToBase64String(@item.Bytes)" alt="image">
+                    <p>@item.Description</p>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
