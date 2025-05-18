@@ -43,6 +43,7 @@
 <div>
     <partial name="_CreateWebShop" model="new CreateWebShopCommand(){ProductEncodedName=Model.EncodedName!}"/>
     <partial name="_CreatePhoto" model="new CreatePhoto(){ProductEncodedName=Model.EncodedName!}"/>
+    <partial name="_EditPhotos" model="new EditPhotos(Model.EncodedName!, Model.Photos)"/>
     <br/>
     <a class="btn btn-outline-secondary" asp-controller="Product" asp-action="Edit" asp-route-encodedName="@Model.EncodedName">Edit</a> |
     <a asp-action="Index">Back to List</a>
@@ -54,4 +55,5 @@
 
 @section Scripts{
     <script src="~/js/Product/Details.js"></script>
+    <script src="~/js/Photo/EditPhotos.js"></script>
 }
