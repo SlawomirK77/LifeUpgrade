@@ -16,7 +16,7 @@ $(document).ready(function(){
                 LoadProductWebShops();
             },
             error: function () {
-                toastr["error"]("Something went wrong")
+                toastr["error"]("addWebShopModal went wrong")
             }
         })
     });
@@ -38,7 +38,7 @@ $(document).ready(function(){
                 LoadProductPhotos();
             },
             error: function () {
-                toastr["error"]("Something went wrong")
+                toastr["error"]("addPhotoModal went wrong")
             }
         })
     });

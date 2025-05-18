@@ -1,7 +1,9 @@
-$(document).ready(function(){
-    let itemsToDelete = []; 
+$(document).ready(function(s){
+    let container = $("#photos-modal");
+    let itemsToDelete = [];
+    LoadProductPhotos();
 
-    $("#editPhotosModal img").click(function (event) {
+    container.on("click","img.img-fluid","click",function (event) {
         event.preventDefault();
         
         if($(this).hasClass("selected")){
@@ -13,6 +15,7 @@ $(document).ready(function(){
             itemsToDelete.push(event.target.id);
         }
     });
+    
     $("#delete-button").click(function (event) {
         event.preventDefault();
         $.ajax({
@@ -21,6 +24,7 @@ $(document).ready(function(){
             data:{ photoGuids: itemsToDelete },
             success: function (data) {
                 toastr["success"]("Deleted selected images")
+                LoadProductPhotos();
                 LoadProductPhotos();
             },
             error: function () {
