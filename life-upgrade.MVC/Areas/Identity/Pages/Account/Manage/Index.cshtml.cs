@@ -46,8 +46,11 @@ namespace LifeUpgrade.MVC.Areas.Identity.Pages.Account.Manage
             var userImage = _userManager.GetUserAsync(User).Result?.Image;
 
             Username = userName;
-            UserImage = Convert.ToBase64String(userImage);
-
+            if (userImage != null)
+            {
+                UserImage = Convert.ToBase64String(userImage);    
+            }
+            
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,

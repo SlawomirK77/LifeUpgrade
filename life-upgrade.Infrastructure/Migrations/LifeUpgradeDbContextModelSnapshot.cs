@@ -43,7 +43,6 @@ namespace LifeUpgrade.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<bool>("LockoutEnabled")
