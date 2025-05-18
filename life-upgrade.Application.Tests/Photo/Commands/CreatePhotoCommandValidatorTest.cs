@@ -1,5 +1,5 @@
 using System;
-using FluentValidation.Results;
+using System.Collections.Generic;
 using FluentValidation.TestHelper;
 using LifeUpgrade.Application.Photo.Commands.CreatePhoto;
 using LifeUpgrade.Domain.Entities;
@@ -12,14 +12,14 @@ namespace life_upgrade.Application.Tests.Photo.Commands;
 public class CreatePhotoCommandValidatorTest
 {
     private readonly Mock<IPhotoRepository> _mockPhotoRepository = new Mock<IPhotoRepository>();
-    private static readonly byte[] bytes = new  byte[] {1, 2, 3, 4};
-    private readonly LifeUpgrade.Domain.Entities.Photo mockPhoto = new()
+    private static readonly List<byte> Bytes = [1, 2, 3, 4];
+    private readonly LifeUpgrade.Domain.Entities.Photo _mockPhoto = new()
     {
         Id = Guid.Parse("c756af6b-c81b-45ea-94d1-720149740f2c"),
-        Bytes = bytes,
+        Bytes = Bytes,
         Description = "description",
         FileExtension = "png",
-        Size = bytes.Length,
+        Size = Bytes.Count,
         ProductId = Guid.Parse("4b497f92-0c37-4a79-b357-b5513ac22013"),
         Product = new Product
         {
@@ -37,14 +37,14 @@ public class CreatePhotoCommandValidatorTest
     [Fact]
     public void Validate_WithValidPhoto_ShouldNotHaveValidationError()
     {
-        _mockPhotoRepository.Setup(repo => repo.GetByBytes(bytes)).ReturnsAsync(mockPhoto);
+        _mockPhotoRepository.Setup(repo => repo.GetByBytes(Bytes)).ReturnsAsync(_mockPhoto);
         var validator = new CreatePhotoCommandValidator(_mockPhotoRepository.Object);
         var command = new CreatePhotoCommand
         {
-            Bytes = [..bytes, 5],
+            Bytes = [..Bytes, 5],
             Description = "description",
             FileExtension = ".png",
-            Size = bytes.Length,
+            Size = Bytes.Count,
             ProductEncodedName = "encoded-name"
         };
         var result = validator.TestValidate(command);
@@ -55,14 +55,14 @@ public class CreatePhotoCommandValidatorTest
     [Fact]
     public void Validate_WithValidPhoto_ShouldHaveValidationError_WhenPhotoAlreadyExists()
     {
-        _mockPhotoRepository.Setup(repo => repo.GetByBytes(bytes)).ReturnsAsync(mockPhoto);
+        _mockPhotoRepository.Setup(repo => repo.GetByBytes(Bytes)).ReturnsAsync(_mockPhoto);
         var validator = new CreatePhotoCommandValidator(_mockPhotoRepository.Object);
         var command = new CreatePhotoCommand
         {
-            Bytes = [..bytes],
+            Bytes = [..Bytes],
             Description = "description",
             FileExtension = ".png",
-            Size = bytes.Length,
+            Size = Bytes.Count,
             ProductEncodedName = "encoded-name"
         };
         var result = validator.TestValidate(command);

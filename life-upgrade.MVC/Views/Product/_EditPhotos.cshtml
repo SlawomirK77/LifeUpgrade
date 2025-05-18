@@ -16,14 +16,14 @@
             <div class="modal-body" id="image-container">
                 @foreach (var item in Model.Photos)
                 {
-                    <img class="card-img" src="data:image/*;base64,@Convert.ToBase64String(item.Bytes)" alt="image" id="@item.Id">
+                    <img class="card-img" src="data:image/*;base64,@Convert.ToBase64String(item.Bytes.ToArray())" alt="image" id="@item.Id">
                     <p>@item.Description</p>
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button id="delete-button" type="button" class="btn btn-danger" asp-controller="Photo" asp-action="Delete">Delete</button>
+                @* <button type="button" class="btn btn-primary">Save changes</button> *@
             </div>
         </div>
     </div>

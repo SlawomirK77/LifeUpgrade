@@ -1,10 +1,12 @@
 using FluentValidation;
 using LifeUpgrade.Application.Photo.Commands.CreatePhoto;
+using LifeUpgrade.Application.Photo.Commands.DeletePhotos;
 using LifeUpgrade.Application.Photo.Queries.GetPhotosByProductEncodedName;
 using LifeUpgrade.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace LifeUpgrade.MVC.Controllers;
 
@@ -45,7 +47,7 @@ public class PhotoController : Controller
             {
                 var command = new CreatePhotoCommand
                 {
-                    Bytes = memoryStream.ToArray(),
+                    Bytes = memoryStream.ToArray().ToList(),
                     Description = photo.Description,
                     FileExtension = photo.ImageFile.FileName[(photo.ImageFile.FileName.LastIndexOf('.') + 1)..],
                     Size = memoryStream.Length,
@@ -62,6 +64,14 @@ public class PhotoController : Controller
             }
             else return BadRequest();
         }
+        return Ok();
+    }
+
+    [HttpDelete]
+    [Authorize]
+    public async Task<IActionResult> Delete(List<Guid> photoGuids)
+    {
+        await _mediator.Send(new DeletePhotosCommand(){PhotoIds = photoGuids});
         return Ok();
     }
 }

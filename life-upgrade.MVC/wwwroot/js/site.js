@@ -40,7 +40,7 @@ const RenderProductPhotos = (photos, container) => {
                 <div class="card border-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">${photo.description}</div>
                     <div class="card-body">
-                        <img class="img-fluid" src="data:image/*;base64,${photo.bytes}" alt="image">
+                        <img class="img-fluid" src="data:image/*;base64,${btoa(String.fromCharCode(...new Uint8Array(photo.bytes)))}" alt="image">
                     </div>
                 </div>`)
     }

@@ -23,7 +23,7 @@ namespace LifeUpgrade.MVC.Models
     public class EditPhoto
     {
         public Guid Id { get; set; }
-        public byte[] Bytes { get; set; } = default!;
+        public List<byte> Bytes { get; set; } = default!;
         public string Description { get; set; } = default!;
     } 
 }

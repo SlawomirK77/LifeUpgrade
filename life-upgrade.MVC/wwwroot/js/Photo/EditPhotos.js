@@ -12,18 +12,20 @@ $(document).ready(function(){
             $(this).addClass("selected");
             itemsToDelete.push(event.target.id);
         }
-        
-        // $.ajax({
-        //     url: $(this).attr('action'),
-        //     type: $(this).attr('method'),
-        //     data: $(this).serialize(),
-        //     success: function (data) {
-        //         toastr["success"]("Added web shop")
-        //         LoadProductWebShops();
-        //     },
-        //     error: function () {
-        //         toastr["error"]("Something went wrong")
-        //     }
-        // })
     });
+    $("#delete-button").click(function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: event.currentTarget.attributes['formaction'].value,
+            type: 'delete',
+            data:{ photoGuids: itemsToDelete },
+            success: function (data) {
+                toastr["success"]("Deleted selected images")
+                LoadProductPhotos();
+            },
+            error: function () {
+                toastr["error"]("Something went wrong")
+            }
+        })
+    })
 });
