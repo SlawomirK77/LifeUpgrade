@@ -3,7 +3,7 @@ namespace LifeUpgrade.Domain.Entities;
 public class Photo
 {
     public Guid Id { get; init; }
-    public byte[] Bytes { get; set; } = default!;
+    public List<byte> Bytes { get; set; } = default!;
     public string Description { get; set; } = default!;
     public string FileExtension { get; set; } = default!;
     public decimal Size { get; set; } = default!;
