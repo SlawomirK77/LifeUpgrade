@@ -1,7 +1,6 @@
 $(document).ready(function(s){
     let container = $("#photos-modal");
     let itemsToDelete = [];
-    LoadProductPhotos();
 
     container.on("click","img.img-fluid","click",function (event) {
         event.preventDefault();
@@ -24,7 +23,6 @@ $(document).ready(function(s){
             data:{ photoGuids: itemsToDelete },
             success: function (data) {
                 toastr["success"]("Deleted selected images")
-                LoadProductPhotos();
                 LoadProductPhotos();
             },
             error: function () {
