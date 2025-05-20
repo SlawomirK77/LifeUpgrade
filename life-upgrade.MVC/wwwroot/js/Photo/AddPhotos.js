@@ -25,20 +25,26 @@ $(document).ready(function(s){
             reader.readAsDataURL(files[i]);
         }
     }
+    
+    $("#addPhotos form").submit(function (event) {
+        event.preventDefault();
+        let formData = new FormData(this);
 
-    // $("#delete-button").click(function (event) {
-    //     event.preventDefault();
-    //     $.ajax({
-    //         url: event.currentTarget.attributes['formaction'].value,
-    //         type: 'delete',
-    //         data:{ photoGuids: itemsToDelete },
-    //         success: function (data) {
-    //             toastr["success"]("Deleted selected images")
-    //             LoadProductPhotos();
-    //         },
-    //         error: function () {
-    //             toastr["error"]("Something went wrong")
-    //         }
-    //     })
-    // })
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: formData,
+            enctype: 'multipart/form-data',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                toastr["success"]("Added multiple photos")
+                LoadProductPhotos();
+            },
+            error: function () {
+                toastr["error"]("adding multiple photos went wrong")
+            }
+        })
+    });
 });
