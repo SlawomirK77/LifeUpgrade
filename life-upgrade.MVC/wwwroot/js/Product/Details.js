@@ -24,6 +24,13 @@ $(document).ready(function(){
     $("#addPhotoModal form").submit(function (event) {
         event.preventDefault();
         let formData = new FormData(this);
+        let currentFormFile = $(this)[0].querySelector("#ImageFile");
+        
+        let formFileCollection = document.createElement("input");
+        formFileCollection.type = "file";
+        formFileCollection.multiple = true;
+        formFileCollection.id = "ImageFiles"
+        formData.append(formFileCollection.id,currentFormFile.files[0], currentFormFile.files[0].name);
 
         $.ajax({
             url: $(this).attr('action'),

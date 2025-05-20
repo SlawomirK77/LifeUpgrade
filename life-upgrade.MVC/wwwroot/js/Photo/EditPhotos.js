@@ -18,7 +18,7 @@ $(document).ready(function(s){
     $("#delete-button").click(function (event) {
         event.preventDefault();
         $.ajax({
-            url: event.currentTarget.attributes['formaction'].value,
+            url: event.target.attributes['formaction'].value,
             type: 'delete',
             data:{ photoGuids: itemsToDelete },
             success: function (data) {

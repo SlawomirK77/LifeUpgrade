@@ -1,4 +1,4 @@
-$(document).ready(function(s){
+$(document).ready(function(){
     let input = $("#file-input")[0];
     let previewContainer = $("#preview-image-container");
 
@@ -7,6 +7,7 @@ $(document).ready(function(s){
             handleFilesPreview(event.target.files);
             previewContainer.empty();
         }
+        
     })
 
     let handleFilesPreview = function (files) {
@@ -26,13 +27,13 @@ $(document).ready(function(s){
         }
     }
     
-    $("#addPhotos form").submit(function (event) {
-        event.preventDefault();
-        let formData = new FormData(this);
+    $("#button-create").click(function () {
+        let form = $("#addPhotos");
+        let formData = new FormData(form[0]);
 
         $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
+            url: form.attr('action'),
+            type: form.attr('method'),
             data: formData,
             enctype: 'multipart/form-data',
             cache: false,

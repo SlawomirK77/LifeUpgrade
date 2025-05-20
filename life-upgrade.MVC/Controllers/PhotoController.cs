@@ -2,11 +2,11 @@ using FluentValidation;
 using LifeUpgrade.Application.Photo.Commands.CreatePhoto;
 using LifeUpgrade.Application.Photo.Commands.DeletePhotos;
 using LifeUpgrade.Application.Photo.Queries.GetPhotosByProductEncodedName;
+using LifeUpgrade.Application.Services;
 using LifeUpgrade.MVC.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace LifeUpgrade.MVC.Controllers;
 
@@ -14,11 +14,13 @@ public class PhotoController : Controller
 {
     private readonly IMediator _mediator;
     private readonly IValidator<CreatePhotoCommand> _validator;
+    private readonly FileService _fileService;
 
-    public PhotoController(IMediator mediator, IValidator<CreatePhotoCommand> validator)
+    public PhotoController(IMediator mediator, IValidator<CreatePhotoCommand> validator, FileService fileService)
     {
         _mediator = mediator;
         _validator = validator;
+        _fileService = fileService;
     }
 
     [HttpGet]
@@ -31,39 +33,15 @@ public class PhotoController : Controller
 
     [HttpPost]
     [Authorize]
-    [Route("Product/Photo")]
-    public async Task<IActionResult> Create(CreatePhoto photo)
+    public async Task<IActionResult> Create(CreatePhotos photos)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-
-        using (var memoryStream = new MemoryStream())
-        {
-            await photo.ImageFile.CopyToAsync(memoryStream);
-
-            if (memoryStream.Length is < 2000000 and > 0)
-            {
-                var command = new CreatePhotoCommand
-                {
-                    Bytes = memoryStream.ToArray().ToList(),
-                    Description = photo.Description,
-                    FileExtension = photo.ImageFile.FileName[(photo.ImageFile.FileName.LastIndexOf('.') + 1)..],
-                    Size = memoryStream.Length,
-                    ProductEncodedName = photo.ProductEncodedName,
-                };
-                var result = await _validator.ValidateAsync(command);
-
-                if (!result.IsValid)
-                {
-                    return BadRequest(result.Errors);
-                }
-                
-                await _mediator.Send(command);
-            }
-            else return BadRequest();
-        }
+        
+        var result = await _fileService.UploadImage(photos.ImageFiles, photos.ProductEncodedName);
+        
         return Ok();
     }
 
