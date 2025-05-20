@@ -27,7 +27,7 @@ const LoadProductWebShops = () => {
             }
         },
         error: function () {
-            toastr["error"]("Something went wrong")
+            toastr["error"]("LoadProductWebShops went wrong")
         }
     })
 }
@@ -40,7 +40,7 @@ const RenderProductPhotos = (photos, container) => {
                 <div class="card border-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">${photo.description}</div>
                     <div class="card-body">
-                        <img class="img-fluid" src="data:image/*;base64,${photo.bytes}" alt="image">
+                        <img class="img-fluid" src="data:image/*;base64,${btoa(String.fromCharCode(...new Uint8Array(photo.bytes)))}" alt="image" id="${photo.id}">
                     </div>
                 </div>`)
     }
@@ -58,10 +58,11 @@ const LoadProductPhotos = () => {
                 container.html("There are no photos for this product")
             } else {
                 RenderProductPhotos(data, container);
+                RenderProductPhotos(data, $("#photos-modal"));
             }
         },
         error: function () {
-            toastr["error"]("Something went wrong")
+            toastr["error"]("LoadProductPhotos went wrong")
         }
     })
 }
@@ -97,7 +98,7 @@ const LoadProductRating = () => {
             }
         },
         error: function () {
-            toastr["error"]("Something went wrong")
+            toastr["error"]("LoadProductRating went wrong")
         }
     })
 }

@@ -1,0 +1,30 @@
+@model CreatePhotos
+
+<div class="modal-content">
+    <form asp-controller="Photo" asp-action="Create" id="addPhotos" enctype="multipart/form-data" method="post">
+        <div class="accordion-header">
+            <h1 class="modal-title fs-5" id="addPhotosLabel">Add Photos</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input asp-for="ProductEncodedName" class="form-control" type="hidden"/>
+                    
+            <div class="form-group">
+                <label asp-for="ImageFiles" class="control-label">ImageFiles</label>
+                <input id="file-input" asp-for="ImageFiles" class="form-control" type="file" multiple/>
+                <span asp-validation-for="ImageFiles" class="text-danger"></span>
+            </div>
+        </div>
+        <div id="preview-image-container"></div>
+        <div class="footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="button" id="button-create" class="btn btn-primary" value="Create"/>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,6 +1,6 @@
 using AutoMapper;
 using LifeUpgrade.Application.ApplicationUser;
-using LifeUpgrade.Application.Photo.Commands;
+using LifeUpgrade.Application.Photo;
 using LifeUpgrade.Application.Product;
 using LifeUpgrade.Application.Product.Commands.EditProduct;
 using LifeUpgrade.Application.ProductRating;

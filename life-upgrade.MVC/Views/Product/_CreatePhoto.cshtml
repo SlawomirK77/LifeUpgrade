@@ -7,7 +7,7 @@
 <div class="modal fade" id="addPhotoModal" tabindex="-1" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form asp-action="CreatePhoto" enctype="multipart/form-data" method="post">
+            <form asp-controller="Photo" asp-action="Create" enctype="multipart/form-data" method="post">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addPhotoModalLabel">Add Photo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

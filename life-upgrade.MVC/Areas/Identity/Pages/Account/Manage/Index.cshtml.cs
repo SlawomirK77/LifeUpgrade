@@ -48,7 +48,7 @@ namespace LifeUpgrade.MVC.Areas.Identity.Pages.Account.Manage
             Username = userName;
             if (userImage != null)
             {
-                UserImage = Convert.ToBase64String(userImage);    
+                UserImage = Convert.ToBase64String(userImage.ToArray());    
             }
             
             Input = new InputModel
@@ -102,7 +102,7 @@ namespace LifeUpgrade.MVC.Areas.Identity.Pages.Account.Manage
             
                 if (memoryStream.Length is < 2000000 and > 0)
                 {
-                    user.Image = memoryStream.ToArray();
+                    user.Image = memoryStream.ToArray().ToList();
                 }
             }
 
