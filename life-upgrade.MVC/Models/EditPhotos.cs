@@ -1,4 +1,4 @@
-using LifeUpgrade.Application.Photo.Commands;
+using LifeUpgrade.Application.Photo;
 
 namespace LifeUpgrade.MVC.Models
 {

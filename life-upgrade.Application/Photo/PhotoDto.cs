@@ -1,4 +1,4 @@
-namespace LifeUpgrade.Application.Photo.Commands;
+namespace LifeUpgrade.Application.Photo;
 
 public class PhotoDto
 {

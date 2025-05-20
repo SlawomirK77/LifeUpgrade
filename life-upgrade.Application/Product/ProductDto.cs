@@ -1,5 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using LifeUpgrade.Application.Photo.Commands;
+using LifeUpgrade.Application.Photo;
 using LifeUpgrade.Domain.Entities;
 
 namespace LifeUpgrade.Application.Product;
