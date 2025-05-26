@@ -56,7 +56,8 @@ $(document).ready(function(){
             setTimeout(() => {
                 this.style.transform = 'scale(1)';
             }, 200);
-            let formData = new FormData(document.querySelector("#ratingForm"));
+            
+            let formData = new FormData(document.querySelector("#rating-form"));
             formData.set("rating", event.currentTarget.control.value);
 
             $.ajax({
