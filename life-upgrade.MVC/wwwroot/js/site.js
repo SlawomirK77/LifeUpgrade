@@ -76,10 +76,16 @@ const RenderProductRating = (ratings, userId, container) => {
         $("#rating-form")[0].getElementsByTagName("input").namedItem("star" + userRating).checked = true;    
     }
 
-    $("#rating-form").append(`
+    let ratingContainer = $("#rating-container");
+    if (ratingContainer[0].children.length > 1) {
+        ratingContainer[0].getElementsByTagName("h5")[0].innerHTML = `(${rating})`; 
+    } else {
+        ratingContainer.append(`
             <div style="max-width: 6rem;">
                     <h5 >(${rating})</h5>
             </div>`)
+    }
+    
 }
 
 const LoadProductRating = () => {

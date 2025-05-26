@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="~/css/rating.css" asp-append-version="true"/>
 
 <div class="col-md-6">
-    <div class="rating-card p-4">
+    <div class="rating-card p-4" id="rating-container">
         <form asp-action="CreateRating" method="post" id="rating-form" class="rating-form-container">
             <div class="star-rating animated-stars" id="star-container">
                 <input type="radio" id="star5" name="rating" value="5">
