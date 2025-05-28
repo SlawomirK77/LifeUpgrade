@@ -27,6 +27,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IWebShopRepository, WebShopRepository>();
         services.AddScoped<IPhotoRepository, PhotoRepository>();
         services.AddScoped<IProductRatingRepository, ProductRatingRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<UserManager<ApplicationUser>>();
     }
