@@ -21,7 +21,7 @@ public static class ServiceCollectionExtension
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<LifeUpgradeDbContext>();
 
-        services.AddScoped<ProductSeeder>();
+        services.AddScoped<DatabaseSeeder>();
         
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IWebShopRepository, WebShopRepository>();
