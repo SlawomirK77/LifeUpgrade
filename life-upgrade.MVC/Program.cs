@@ -13,7 +13,7 @@ var app = builder.Build();
 
 var scope = app.Services.CreateScope();
 
-var seeder = scope.ServiceProvider.GetRequiredService<ProductSeeder>();
+var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
 await seeder.SeedAsync();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
