@@ -1,4 +1,4 @@
-@model IEnumerable<LifeUpgrade.Application.Product.ProductDto>
+@model LifeUpgrade.MVC.Helpers.PaginatedList<LifeUpgrade.Domain.Entities.Product>
 
 @{
     ViewData["Title"] = "Products";
@@ -23,3 +23,18 @@
         </div> 
     }
 </div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
