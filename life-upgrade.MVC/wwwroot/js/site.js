@@ -78,7 +78,7 @@ const RenderProductRating = (ratings, userId, container) => {
 
     let ratingContainer = $("#rating-container");
     if (ratingContainer[0].children.length > 1) {
-        ratingContainer[0].getElementsByTagName("h5")[0].innerHTML = `(${rating})`; 
+        ratingContainer[0].getElementsByTagName("h5")[0].innerHTML = `(${rating.toFixed(2)})`; 
     } else {
         ratingContainer.append(`
             <div style="max-width: 6rem;">
