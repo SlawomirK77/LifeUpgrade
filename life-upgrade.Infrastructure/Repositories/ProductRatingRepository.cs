@@ -21,6 +21,9 @@ public class ProductRatingRepository : IProductRatingRepository
     public async Task Commit()
     => await _dbContext.SaveChangesAsync();
 
+    public async Task<IEnumerable<ProductRating>> GetAll()
+    => await _dbContext.ProductRatings.ToListAsync();
+
     public async Task<IEnumerable<ProductRating>> GetByEncodedName(string encodedName)
     {
         var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.EncodedName == encodedName);
