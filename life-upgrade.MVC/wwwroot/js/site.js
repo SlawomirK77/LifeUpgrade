@@ -82,7 +82,7 @@ const RenderProductRating = (ratings, userId, container) => {
     } else {
         ratingContainer.append(`
             <div style="max-width: 6rem;">
-                    <h5 >(${rating})</h5>
+                    <h5 >(${rating.toFixed(2)})</h5>
             </div>`)
     }
     
