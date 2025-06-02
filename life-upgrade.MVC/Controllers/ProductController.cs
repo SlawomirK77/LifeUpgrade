@@ -4,6 +4,7 @@ using LifeUpgrade.Application.Product;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Application.Product.Commands.EditProduct;
 using LifeUpgrade.Application.Product.Queries.GetAllProducts;
+using LifeUpgrade.Application.Product.Queries.GetAllProductsQueryable;
 using LifeUpgrade.Application.Product.Queries.GetProductByEncodedName;
 using LifeUpgrade.Application.ProductRating.Commands.CreateProductRating;
 using LifeUpgrade.Application.ProductRating.Queries.GetAllProductRatings;
@@ -26,20 +27,17 @@ public class ProductController : Controller
     private readonly ILogger<ProductController> _logger;
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    private readonly IProductRepository _productRepository;
 
-    public ProductController(ILogger<ProductController> logger, IMediator mediator, IMapper mapper, IProductRepository productRepository)
+    public ProductController(ILogger<ProductController> logger, IMediator mediator, IMapper mapper)
     {
         _logger = logger;
         _mediator = mediator;
         _mapper = mapper;
-        _productRepository = productRepository;
     }
     
     public async Task<IActionResult> Index(int? pageNumber)
     {
-        // var products = await _mediator.Send(new GetAllProductsQuery());
-        var products = await _productRepository.GetAllQueryable();
+        var products = await _mediator.Send(new GetAllProductsQueryableQuery());
         var ratings = await _mediator.Send(new GetAllProductRatingsQuery());
         var ratingOrder = ratings.GroupBy(x => x.ProductEncodedName).Select(x => 
             new
