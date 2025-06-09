@@ -20,8 +20,8 @@ $(document).ready(function(){
                 let img = document.createElement("img");
                 img.classList.add("img-fluid");
                 img.src = event.target.result.toString();
-
-                previewContainer[0].append(div.appendChild(img));
+                div.appendChild(img)
+                previewContainer[0].append(div);
             }
             reader.readAsDataURL(files[i]);
         }

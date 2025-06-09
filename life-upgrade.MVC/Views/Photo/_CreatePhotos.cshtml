@@ -1,5 +1,7 @@
 @model CreatePhotos
 
+<link rel="stylesheet" href="~/css/dragable.css" asp-append-version="true"/>
+
 <div class="modal-content">
     <form asp-controller="Photo" asp-action="Create" id="addPhotos" enctype="multipart/form-data" method="post">
         <div class="accordion-header">
@@ -17,7 +19,8 @@
                 <span asp-validation-for="ImageFiles" class="text-danger"></span>
             </div>
         </div>
-        <div id="preview-image-container"></div>
+        <div id="preview-image-container">
+        </div>
         <div class="footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <input type="button" id="button-create" class="btn btn-primary" value="Create"/>

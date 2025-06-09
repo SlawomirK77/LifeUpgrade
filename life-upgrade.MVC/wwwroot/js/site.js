@@ -33,14 +33,25 @@ const LoadProductWebShops = () => {
 }
 
 const RenderProductPhotos = (photos, container) => {
+    function arrayBufferToBase64(buffer) {
+        let binary = '';
+        const byteArray = new Uint8Array(buffer);
+        const length = byteArray.byteLength;
+        for (let i = 0; i < length; i++) {
+            binary += String.fromCharCode(byteArray[i]);
+        }
+        return btoa(binary);
+    }
+    
     container.empty();
 
     for(const photo of photos) {
+        let src = arrayBufferToBase64(photo.bytes);
         container.append(`
                 <div class="card border-secondary mb-3" style="max-width: 18rem;">
                     <div class="card-header">${photo.description}</div>
-                    <div class="card-body">
-                        <img class="img-fluid" src="data:image/*;base64,${btoa(String.fromCharCode(...new Uint8Array(photo.bytes)))}" alt="image" id="${photo.id}">
+                    <div class="card-body card-draggable col-2">
+                        <img class="img-fluid" src="data:image/*;base64,${src}" alt="image">
                     </div>
                 </div>`)
     }
@@ -59,6 +70,7 @@ const LoadProductPhotos = () => {
             } else {
                 RenderProductPhotos(data, container);
                 RenderProductPhotos(data, $("#photos-modal"));
+                MakeCardsDraggable();
             }
         },
         error: function () {
