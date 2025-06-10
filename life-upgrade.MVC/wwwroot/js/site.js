@@ -45,14 +45,13 @@ const RenderProductPhotos = (photos, container) => {
     
     container.empty();
 
+    let idCounter = 0;
     for(const photo of photos) {
         let src = arrayBufferToBase64(photo.bytes);
         container.append(`
-                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                <div id =${idCounter++} class="card border-secondary mb-3 card-draggable">
                     <div class="card-header">${photo.description}</div>
-                    <div class="card-body card-draggable col-2">
-                        <img class="img-fluid" src="data:image/*;base64,${src}" alt="image">
-                    </div>
+                    <img class="card-img-bottom" src="data:image/*;base64,${src}" alt="image">
                 </div>`)
     }
 }

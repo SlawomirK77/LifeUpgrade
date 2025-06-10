@@ -1,19 +1,11 @@
 const MakeCardsDraggable = () => {
-    
     let newX = 0, newY = 0, startX = 0, startY = 0;
     const cards = document.getElementsByClassName('card-draggable')
 
     let images = [].slice.call(cards).filter((value) =>
-        value.classList.contains("card-draggable") && value.offsetLeft > 0
+        value.classList.contains("card-draggable") && value.offsetWidth > 0
     )
-
-    const imagePositions = images.map((image) =>  ({
-        image: image,
-        x : image.offsetLeft,
-        y : image.offsetTop,
-        midX: image.offsetLeft + image.clientWidth / 2,
-        midY: image.offsetTop + image.clientHeight / 2,
-    }));
+    
     let ghostImage;
     
     for (const image of images) {
@@ -37,107 +29,98 @@ const MakeCardsDraggable = () => {
             startY = e.clientY
             
             moveGhostImage(ghostImage);
-            
             setImagesProperPositions(image);
         }
 
         function mouseUp(e){
             document.removeEventListener('mousemove', mouseMove)
+            removeGhostImage(ghostImage);
         }
         
-        function setImagesProperPositions(imageOnCursor) {
-            let imageOnCursorMidPosition = imageOnCursor.offsetLeft + (imageOnCursor.clientWidth / 2);
+        function setImagesProperPositions(draggedImage) {
+            let giMidX = ghostImage.getBoundingClientRect().left + (ghostImage.clientWidth / 2);
+            let giMidY = ghostImage.getBoundingClientRect().top + (ghostImage.clientHeight / 2);
             
-            let imagesAxisX = images.filter((image) =>{
-                return image.offsetLeft < startX && (image.offsetLeft + image.clientWidth) > startX
-            })
-            // add proper axisY check
+            let imagesIntersections = images.filter((image) =>{
+                let pos = image.getBoundingClientRect();
+                let xAxisIntersection = pos.x < giMidX && (pos.x + pos.width) > giMidX;
+                let yAxisIntersection = pos.y < giMidY && (pos.y + pos.height) > giMidY;
+                return xAxisIntersection && yAxisIntersection;
+            });
             
-            let imageToMove = imagesAxisX.find(element => element !== imageOnCursor)
-            
-            // fix image display
+            let imageToMove = imagesIntersections.find(element => element !== draggedImage);
             
             if (imageToMove) {
-                let imageToMoveMidPosition = imageToMove.offsetLeft + imageToMove.clientWidth / 2;
-                
-                if (imageOnCursorMidPosition < imageToMoveMidPosition) {
-                    changeImagesPositions(imageOnCursor, imageToMove);
-                }
-
-                if (imageOnCursorMidPosition > imageToMoveMidPosition) {
-                    changeImagesPositions(imageOnCursor, imageToMove);
-                }
-                
-                
-                
-                let properPosition = getProperPosition(imageToMove, imagePositions);
-            }         
+                swapContainersOrder(draggedImage, imageToMove);
+            } else {
+                let nearestGhost = getImageNearestGhostImage(giMidX, giMidY);
+                swapContainersOrder(draggedImage, nearestGhost);
+            }        
             
         }
         
-        function getProperPosition(image, imagePositions) {
-            let positionIndex = 0;
-            imagePositions.forEach((value, index) => {
-                let imageMidX = image.offsetLeft + image.clientWidth / 2
-                let imageMidY = image.offsetTop + image.clientHeight / 2
-                
-                let xNewDifference = Math.abs(imageMidX - value.midX);
-                let yNewDifference = Math.abs(imageMidY - value.midY);
-                let xCurrentDifference = Math.abs(imageMidX - imagePositions[positionIndex].midX);
-                let yCurrentDifference = Math.abs(imageMidY - imagePositions[positionIndex].midY);
-                
-                if (xNewDifference < xCurrentDifference) {
-                    positionIndex = index;
+        function swapContainersOrder(containerOne, containerTwo) {
+            let parent = containerOne.parentElement;
+            let c1 = containerOne.getBoundingClientRect();
+            let c2 = containerTwo.getBoundingClientRect();
+            
+            let containerToRemove;
+            let containerToInsertBefore;
+            
+            if (c1.x <= c2.x){
+                if (c1.y > c2.y){
+                    containerToRemove = containerOne;
+                    containerToInsertBefore = containerTwo;
                 }
-            })
+                else {
+                    containerToRemove = containerOne;
+                    containerToInsertBefore = containerTwo.nextElementSibling;
+                }
+            } else {
+                if (c1.y < c2.y){
+                    containerToRemove = containerOne;
+                    containerToInsertBefore = containerTwo.nextElementSibling;
+                } else {
+                    containerToRemove = containerOne;
+                    containerToInsertBefore = containerTwo;
+                }
+            }
             
-            return imagePositions[positionIndex];
-        }
-        
-        function changeImagesPositions(imageOne, imageTwo) {
-            let imageOneOffsetLeft = imageTwo.offsetLeft + 'px';
-            let imageOneOffsetTop = imageTwo.offsetTop + 'px';
-            let imageTwoOffsetLeft = imageOne.offsetLeft + 'px';
-            let imageTwoOffsetTop = imageOne.offsetTop + 'px';
-            
-            imageOne.style.left = imageOneOffsetLeft;
-            imageOne.style.top = imageOneOffsetTop;
-            imageTwo.style.left = imageTwoOffsetLeft;
-            imageTwo.style.top = imageTwoOffsetTop;
-            
-            swapImagePosition(imageOne, imageTwo, imagePositions);
-        }
-        
-        function swapImagePosition(imageOne, imageTwo, positionsList){
-            let images = positionsList.filter(x => x.image === imageOne || x.image === imageTwo);
-            images[0].x = images[0].x ^ images[1].x;
-            images[1].x = images[0].x ^ images[1].x;
-            images[0].x = images[0].x ^ images[1].x;
-            
-            images[0].y = images[0].y ^ images[1].y;
-            images[1].y = images[0].y ^ images[1].y;
-            images[0].y = images[0].y ^ images[1].y;
+            parent.removeChild(containerToRemove);
+            parent.insertBefore(containerToRemove, containerToInsertBefore);
         }
         
         function createGhostImage(image){
-            if(ghostImage) removeGhostImage(ghostImage);
+            removeGhostImage(ghostImage);
             let ghost = image.cloneNode(true);
             ghost.classList.replace("card-draggable", "card-draggable-ghost");
-            ghost.style.left = image.offsetLeft + 'px';
-            ghost.style.top = image.offsetTop + 'px';
+            ghost.style.left = image.getBoundingClientRect().x + 'px';
+            ghost.style.top = image.getBoundingClientRect().y + 'px';
             document.body.appendChild(ghost);
             
             return ghost;
         }
         
         function moveGhostImage(image){
-            image.style.top = (image.offsetTop - newY) + 'px'
-            image.style.left = (image.offsetLeft - newX) + 'px'
+            image.style.top = image.offsetTop - newY + 'px'
+            image.style.left = image.offsetLeft - newX + 'px'
         }
         
         function removeGhostImage(ghost){
-            document.body.removeChild(ghost)
+            if (!ghost) return; 
+            document.body.removeChild(ghost);
             ghostImage = undefined;
+        }
+        
+        function getImageNearestGhostImage(giMidX, giMidY){
+            return images.map(el => {
+                let pos = el.getBoundingClientRect();
+                return {
+                    distance: Math.hypot(pos.x + (pos.width / 2) - giMidX, pos.y + (pos.height / 2) - giMidY),
+                    image: el,
+                }
+            }).sort((a, b) => a.distance - b.distance)
+                [0].image;
         }
     }
 }
