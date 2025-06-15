@@ -27,10 +27,13 @@ public class PhotoRepository : IPhotoRepository
         var x =  await _dbContext.Photos.Where(x => guids.Contains(x.Id)).ExecuteDeleteAsync();
     }
 
+    public Task Commit()
+        => _dbContext.SaveChangesAsync();
+
     public async Task<IEnumerable<Photo>> GetPhotosByProductEncodedName(string encodedName)
     {
         var productId = _dbContext.Products.FirstOrDefaultAsync(x => x.EncodedName == encodedName).Result!.Id;
         
-        return await _dbContext.Photos.Where(x => x.ProductId == productId).ToListAsync();
+        return await _dbContext.Photos.Where(x => x.ProductId == productId).OrderBy(x => x.Order).ToListAsync();
     }
 }

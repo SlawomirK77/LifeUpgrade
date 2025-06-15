@@ -32,7 +32,7 @@ const LoadProductWebShops = () => {
     })
 }
 
-const RenderProductPhotos = (photos, container) => {
+const RenderProductPhotos = (photos, container, button) => {
     function arrayBufferToBase64(buffer) {
         let binary = '';
         const byteArray = new Uint8Array(buffer);
@@ -54,6 +54,7 @@ const RenderProductPhotos = (photos, container) => {
                     <img class="card-img-bottom" src="data:image/*;base64,${src}" alt="image">
                 </div>`)
     }
+    if (button) container.append(`<button id="change-order" class="btn btn-dark">|| ChangeOrder ||</button>`);
 }
 
 const LoadProductPhotos = () => {
@@ -67,7 +68,7 @@ const LoadProductPhotos = () => {
             if (!data.length) {
                 container.html("There are no photos for this product")
             } else {
-                RenderProductPhotos(data, container);
+                RenderProductPhotos(data, container, true);
                 RenderProductPhotos(data, $("#photos-modal"));
                 MakeCardsDraggable();
             }
