@@ -6,6 +6,6 @@ public class ChangeOrderPhotosCommandValidator : AbstractValidator<ChangeOrderPh
 {
     public ChangeOrderPhotosCommandValidator()
     {
-        RuleFor(x => x.Photos).NotEmpty().NotNull();
+        RuleFor(x => x.PhotosGuids).NotEmpty().NotNull();
     }
 }

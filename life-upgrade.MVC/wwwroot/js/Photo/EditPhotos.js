@@ -2,16 +2,16 @@ $(document).ready(function(s){
     let container = $("#photos-modal");
     let itemsToDelete = [];
 
-    container.on("click","img.img-fluid","click",function (event) {
+    container.on("click",".card-img-bottom","click",function (event) {
         event.preventDefault();
         
         if($(this).hasClass("selected")){
             $(this).removeClass("selected");
-            itemsToDelete.splice(itemsToDelete.indexOf(event.target.id), 1);
+            itemsToDelete.splice(itemsToDelete.indexOf(event.target.offsetParent.id), 1);
         }
         else {
             $(this).addClass("selected");
-            itemsToDelete.push(event.target.id);
+            itemsToDelete.push(event.target.offsetParent.id);
         }
     });
     

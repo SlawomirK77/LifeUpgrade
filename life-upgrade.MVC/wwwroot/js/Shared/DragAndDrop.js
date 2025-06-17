@@ -86,8 +86,10 @@ const MakeCardsDraggable = () => {
                 }
             }
             
-            parent.removeChild(containerToRemove);
-            parent.insertBefore(containerToRemove, containerToInsertBefore);
+            if (containerToInsertBefore){
+                parent.removeChild(containerToRemove);
+                parent.insertBefore(containerToRemove, containerToInsertBefore);
+            }
         }
         
         function createGhostImage(image){

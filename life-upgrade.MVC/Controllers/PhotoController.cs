@@ -50,7 +50,7 @@ public class PhotoController : Controller
     [Authorize]
     public async Task<IActionResult> ChangeOrder(ChangeOrderPhotosCommand command)
     {
-        //todo nie ma photosow
+        await _mediator.Send(command);
         return Ok();
     }
 

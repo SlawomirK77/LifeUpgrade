@@ -3,7 +3,7 @@
     height: 24rem;
 }
 .card-img-bottom {
-    height: 90%;
+    height: 80%;
     width: 100%;
     object-fit: scale-down;
 }

@@ -17,9 +17,9 @@ public class ChangeOrderPhotosCommandHandler : IRequestHandler<ChangeOrderPhotos
     {
         var newOrder = 0;
 
-        foreach (var photo in request.Photos)
+        foreach (var photoId in request.PhotosGuids)
         {
-            var savedPhoto = await _photoRepository.GetByBytes(Encoding.ASCII.GetBytes(photo).ToList());
+            var savedPhoto = await _photoRepository.GetById(photoId);
             savedPhoto!.Order = newOrder++;
             await _photoRepository.Commit();
         }

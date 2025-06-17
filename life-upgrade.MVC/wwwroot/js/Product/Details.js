@@ -29,8 +29,10 @@ $(document).ready(function(){
         let formFileCollection = document.createElement("input");
         formFileCollection.type = "file";
         formFileCollection.multiple = true;
-        formFileCollection.id = "ImageFiles"
-        formData.append(formFileCollection.id,currentFormFile.files[0], currentFormFile.files[0].name);
+        formFileCollection.id = "ImageFiles";
+        formData.append(formFileCollection.id,currentFormFile.files[0]);
+        let existingPhotosCount = $('#photos').children('.card').length;
+        formData.append('ExistingPhotosCount', existingPhotosCount);
 
         $.ajax({
             url: $(this).attr('action'),
