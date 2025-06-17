@@ -39,4 +39,9 @@ public class PhotoRepository : IPhotoRepository
         
         return await _dbContext.Photos.Where(x => x.ProductId == productId).OrderBy(x => x.Order).ToListAsync();
     }
+
+    public async Task<IEnumerable<Photo>> GetPhotosByOrderPosition(int orderPosition)
+    {
+        return await _dbContext.Photos.Where(x => x.Order == orderPosition).ToListAsync(); 
+    }
 }
