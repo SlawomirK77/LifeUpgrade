@@ -32,18 +32,29 @@ const LoadProductWebShops = () => {
     })
 }
 
-const RenderProductPhotos = (photos, container) => {
+const RenderProductPhotos = (photos, container, button) => {
+    function arrayBufferToBase64(buffer) {
+        let binary = '';
+        const byteArray = new Uint8Array(buffer);
+        const length = byteArray.byteLength;
+        for (let i = 0; i < length; i++) {
+            binary += String.fromCharCode(byteArray[i]);
+        }
+        return btoa(binary);
+    }
+    
     container.empty();
 
+    let idCounter = 0;
     for(const photo of photos) {
+        let src = arrayBufferToBase64(photo.bytes);
         container.append(`
-                <div class="card border-secondary mb-3" style="max-width: 18rem;">
+                <div id="${photo.id}" class="card border-secondary mb-3 card-draggable" data-order="${idCounter++}">
                     <div class="card-header">${photo.description}</div>
-                    <div class="card-body">
-                        <img class="img-fluid" src="data:image/*;base64,${btoa(String.fromCharCode(...new Uint8Array(photo.bytes)))}" alt="image" id="${photo.id}">
-                    </div>
+                    <img class="card-img-bottom" src="data:image/*;base64,${src}" alt="image">
                 </div>`)
     }
+    if (button) container.append(`<button id="change-order" class="btn btn-dark">|| ChangeOrder ||</button>`);
 }
 
 const LoadProductPhotos = () => {
@@ -57,8 +68,9 @@ const LoadProductPhotos = () => {
             if (!data.length) {
                 container.html("There are no photos for this product")
             } else {
-                RenderProductPhotos(data, container);
+                RenderProductPhotos(data, container, true);
                 RenderProductPhotos(data, $("#photos-modal"));
+                MakeCardsDraggable();
             }
         },
         error: function () {
@@ -82,7 +94,7 @@ const RenderProductRating = (ratings, userId, container) => {
     } else {
         ratingContainer.append(`
             <div style="max-width: 6rem;">
-                    <h5 >(${rating})</h5>
+                    <h5 >(${rating.toFixed(2)})</h5>
             </div>`)
     }
     

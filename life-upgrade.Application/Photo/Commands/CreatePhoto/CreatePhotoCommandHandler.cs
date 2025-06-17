@@ -16,7 +16,8 @@ public class CreatePhotoCommandHandler : IRequestHandler<CreatePhotoCommand>
     public async Task Handle(CreatePhotoCommand request, CancellationToken cancellationToken)
     {
         var product = await _productRepository.GetByEncodedName(request.ProductEncodedName);
-
+        var photoOrder = request.Order;
+        
         var photo = new Domain.Entities.Photo
         {
             Bytes = request.Bytes,
@@ -24,6 +25,7 @@ public class CreatePhotoCommandHandler : IRequestHandler<CreatePhotoCommand>
             FileExtension = request.FileExtension,
             Size = request.Size,
             ProductId = product!.Id,
+            Order = photoOrder,
         };
         
         await _photoRepository.Create(photo);

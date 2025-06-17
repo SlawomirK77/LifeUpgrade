@@ -11,6 +11,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="~/css/dragable.css" asp-append-version="true"/>
+
 <h1>@Model.Name Details</h1>
 
 <div>
@@ -51,10 +53,12 @@
 
 <div id="webshops" class="row" data-encoded-name="@Model.EncodedName"></div>
 <div id="photos" class="row" data-encoded-name="@Model.EncodedName"></div>
-<div id="rating" class="row" data-encoded-name="@Model.EncodedName" data-user-id="@UserManager.GetUserId(User)"></div>
+<div id="rating" class="row" data-encoded-name="@Model.EncodedName" data-user-id="@UserManager.GetUserId(User)"></div> @*container is empty but data-encoded-name is required somehow*@
 
 @section Scripts{
     <script src="~/js/Product/Details.js"></script>
     <script src="~/js/Photo/EditPhotos.js"></script>
+    <script src="~/js/Photo/ChangeOrderPhotos.js"></script>
     <script src="~/js/Photo/AddPhotos.js"></script>
+    <script src="~/js/Shared/DragAndDrop.js"></script>
 }

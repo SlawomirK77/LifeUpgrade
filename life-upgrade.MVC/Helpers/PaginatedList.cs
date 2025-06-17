@@ -1,3 +1,6 @@
+using AutoMapper;
+using LifeUpgrade.Application.Photo;
+using LifeUpgrade.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LifeUpgrade.MVC.Helpers;
