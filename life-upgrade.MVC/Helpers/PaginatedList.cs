@@ -27,27 +27,4 @@ public class PaginatedList<T> : List<T>
         var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
         return new PaginatedList<T>(items, count, pageIndex, pageSize);
     }
-
-    public static async Task<PaginatedList<Domain.Entities.Product>> CreateAsync(IQueryable<Domain.Entities.Product> source, int pageIndex, int pageSize, IEnumerable<PhotoDto> mainPhotos)
-    {
-        var count = await source.CountAsync();
-        var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-        items.ForEach(x =>
-        {
-            var photo = mainPhotos.FirstOrDefault(p => p.ProductId == x.Id);
-            if (photo != null)
-                x.Photos.Add(new Domain.Entities.Photo
-                {
-                    Id = photo.Id,
-                    Bytes = photo.Bytes,
-                    Description = photo.Description,
-                    FileExtension = photo.FileExtension,
-                    Size = photo.Size,
-                    Order = 0,
-                    ProductId = photo.ProductId,
-                    Product = x,
-                });
-        });
-        return new PaginatedList<Domain.Entities.Product>(items, count, pageIndex, pageSize);
-    }
 }
