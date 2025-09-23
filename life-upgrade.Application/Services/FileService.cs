@@ -17,24 +17,24 @@ public class FileService
         _validator = validator;
     }
 
-    public async Task<IActionResult> UploadImage(IFormFile file, string productEncodedName, string? description = null)
+    public async Task<IActionResult> UploadImage(IFormFile file, string productEncodedName, int existingPhotosCount, string? description = null)
     {
-        await UploadFile(file, productEncodedName, description);
+        await UploadFile(file, productEncodedName, existingPhotosCount, description);
         
         return new OkResult();
     }
 
-    public async Task<IActionResult> UploadImage(IFormFileCollection files, string productEncodedName)
+    public async Task<IActionResult> UploadImage(IFormFileCollection files, string productEncodedName, int existingPhotosCount)
     {
         foreach (var file in files)
         {
-            await UploadFile(file, productEncodedName);
+            await UploadFile(file, productEncodedName, existingPhotosCount++);
         }
 
         return new OkResult();
     }
 
-    private async Task<IActionResult> UploadFile(IFormFile file, string productEncodedName, string? description = null)
+    private async Task<IActionResult> UploadFile(IFormFile file, string productEncodedName, int existingPhotosCount, string? description = null)
     {
         using var memoryStream = new MemoryStream();
         await file.CopyToAsync(memoryStream);
@@ -47,6 +47,7 @@ public class FileService
                 Description = description,
                 FileExtension = file.FileName[(file.FileName.LastIndexOf('.') + 1)..],
                 Size = memoryStream.Length,
+                Order = existingPhotosCount,
                 ProductEncodedName = productEncodedName,
             };
             var result = _validator.ValidateAsync(command).Result;

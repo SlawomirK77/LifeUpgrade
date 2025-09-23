@@ -1,4 +1,5 @@
 using FluentValidation;
+using LifeUpgrade.Application.Photo.Commands.ChangeOrderPhotos;
 using LifeUpgrade.Application.Photo.Commands.CreatePhoto;
 using LifeUpgrade.Application.Photo.Commands.DeletePhotos;
 using LifeUpgrade.Application.Photo.Queries.GetPhotosByProductEncodedName;
@@ -40,8 +41,16 @@ public class PhotoController : Controller
             return BadRequest(ModelState);
         }
         
-        var result = await _fileService.UploadImage(photos.ImageFiles, photos.ProductEncodedName);
+        var result = await _fileService.UploadImage(photos.ImageFiles, photos.ProductEncodedName, photos.ExistingPhotosCount);
         
+        return Ok();
+    }
+
+    [HttpPatch]
+    [Authorize]
+    public async Task<IActionResult> ChangeOrder(ChangeOrderPhotosCommand command)
+    {
+        await _mediator.Send(command);
         return Ok();
     }
 

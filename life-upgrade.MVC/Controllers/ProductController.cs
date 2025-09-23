@@ -1,5 +1,6 @@
 using AutoMapper;
 using LifeUpgrade.Application.Photo.Queries.GetPhotosByProductEncodedName;
+using LifeUpgrade.Application.Photo.Queries.GetProductsMainPhotos;
 using LifeUpgrade.Application.Product;
 using LifeUpgrade.Application.Product.Commands.CreateProduct;
 using LifeUpgrade.Application.Product.Commands.EditProduct;
@@ -38,6 +39,8 @@ public class ProductController : Controller
     public async Task<IActionResult> Index(int? pageNumber)
     {
         var products = await _mediator.Send(new GetAllProductsQueryableQuery());
+        var photos = await _mediator.Send(new GetProductsMainPhotosQuery());
+        
         var ratings = await _mediator.Send(new GetAllProductRatingsQuery());
         var ratingOrder = ratings.GroupBy(x => x.ProductEncodedName).Select(x => 
             new
@@ -50,8 +53,17 @@ public class ProductController : Controller
         var orderedList = products.OrderByDescending(i => ratingOrder.Select(x => x.name).Reverse().ToList().IndexOf(i.EncodedName))
             .ThenBy(x => x.Price)
             .AsQueryable();
-        var pageSize = 4;
-        return View(await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize));
+        var pageSize = 8;
+        var viewData = await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize);
+        foreach (var product in viewData)
+        {
+            var mainPhoto = photos.FirstOrDefault(x => x.ProductId == product.Id);
+            if (mainPhoto != null)
+            {
+                product.Photos = new List<Photo>([_mapper.Map<Photo>(mainPhoto)]);    
+            }
+        }
+        return View(viewData);
     }
     
     [Route("Product/{encodedName}/Details")]

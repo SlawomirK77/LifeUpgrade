@@ -11,17 +11,17 @@ $(document).ready(function(){
     })
 
     let handleFilesPreview = function (files) {
-        for (var i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
             const reader = new FileReader();
             reader.onload = function(event) {
 
                 let div = document.createElement("div");
-                div.classList.add("card-body");
+                div.classList.add("card", "border-secondary", "mb-3");
                 let img = document.createElement("img");
-                img.classList.add("img-fluid");
+                img.classList.add("card-img-bottom");
                 img.src = event.target.result.toString();
-
-                previewContainer[0].append(div.appendChild(img));
+                div.appendChild(img)
+                previewContainer[0].append(div);
             }
             reader.readAsDataURL(files[i]);
         }
@@ -30,6 +30,7 @@ $(document).ready(function(){
     $("#button-create").click(function () {
         let form = $("#addPhotos");
         let formData = new FormData(form[0]);
+        formData.append('existingPhotosCount', $('#photos-modal').children('.card').length)
 
         $.ajax({
             url: form.attr('action'),

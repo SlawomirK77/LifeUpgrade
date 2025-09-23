@@ -14,6 +14,10 @@
     @foreach (var item in Model)
     {
         <div class="card m-3" style="width: 18rem;">
+        @if (item.Photos != null)
+        {
+            <img class="card-img-top" src="data:image/*;base64,@(Convert.ToBase64String(item.Photos[0].Bytes.ToArray()))" alt="image"/>
+        }
             <div class="card-body">
                 <h5 class="card-title">@item.Name</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Price: $@item.Price</h6>
