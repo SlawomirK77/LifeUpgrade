@@ -8,4 +8,5 @@ public interface IProductRatingRepository
     Task<IEnumerable<Domain.Entities.ProductRating>> GetAll();
     Task<IEnumerable<Domain.Entities.ProductRating>> GetByEncodedName(string encodedName);
     Task<Domain.Entities.ProductRating?> GetByEncodedNameAndUserId(string encodedName, Guid userId);
+    Task DeleteUserRatingForProduct(Guid userId, string productName);
 }

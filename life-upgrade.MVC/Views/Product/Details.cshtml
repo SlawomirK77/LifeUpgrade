@@ -39,6 +39,7 @@
         </dd>
         <div class="container">
             <partial name="_CreateProductRating" model="new CreateOrEditProductRatingCommand(){ProductEncodedName=Model.EncodedName!}"/>
+            <button id="resetUserRating" type="button" class="btn btn-secondary" data-encoded-name="@Model.EncodedName">Reset my rating</button>
         </div>
     </dl>
 </div>
