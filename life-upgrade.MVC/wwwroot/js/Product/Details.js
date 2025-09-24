@@ -52,6 +52,26 @@ $(document).ready(function(){
         })
     });
 
+    $("#resetUserRating").click(function (event) {
+        event.preventDefault();
+        let encodedName = $(this).data('encodedName');
+
+        $.ajax({
+            url: "Rating",
+            type: "DELETE",
+            data: { encodedName: encodedName },
+            contentType: false,
+            processData: false,
+            success: function () {
+                toastr["success"]("Rating has been successfully reset")
+                LoadProductRating();
+            },
+            error: function () {
+                toastr["error"]("something went wrong with rating reset")
+            }
+        })
+    });
+
     document.querySelectorAll('.star-rating:not(.readonly) label').forEach(star => {
         star.addEventListener('click', function(event) {
             this.style.transform = 'scale(1.2)';

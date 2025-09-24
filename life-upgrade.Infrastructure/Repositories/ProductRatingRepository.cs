@@ -38,4 +38,9 @@ public class ProductRatingRepository : IProductRatingRepository
         
         return result;
     }
+
+    public async Task DeleteUserRatingForProduct(Guid userId, string productName)
+    { 
+        await _dbContext.ProductRatings.Where(x => x.UserId == userId && x.ProductEncodedName == productName).ExecuteDeleteAsync();
+    }
 }

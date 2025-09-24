@@ -8,6 +8,7 @@ using LifeUpgrade.Application.Product.Queries.GetAllProducts;
 using LifeUpgrade.Application.Product.Queries.GetAllProductsQueryable;
 using LifeUpgrade.Application.Product.Queries.GetProductByEncodedName;
 using LifeUpgrade.Application.ProductRating.Commands.CreateProductRating;
+using LifeUpgrade.Application.ProductRating.Commands.DeleteUserProductRating;
 using LifeUpgrade.Application.ProductRating.Queries.GetAllProductRatings;
 using LifeUpgrade.Application.ProductRating.Queries.GetRatingsByProductEncodedName;
 using LifeUpgrade.Application.WebShop.Commands.CreateWebShop;
@@ -170,6 +171,20 @@ public class ProductController : Controller
         }
         
         await _mediator.Send(command);
+        return Ok();
+    }
+    
+    [HttpDelete]
+    [Route("Product/{encodedName}/Rating")]
+    [Authorize(Roles = "User")]
+    public async Task<IActionResult> DeleteRating(string encodedName)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        await _mediator.Send(new DeleteUserProductRatingCommand(){ProductEncodedName = encodedName});
         return Ok();
     }
 }
