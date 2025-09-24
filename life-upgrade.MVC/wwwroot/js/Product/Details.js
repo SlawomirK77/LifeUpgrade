@@ -65,6 +65,7 @@ $(document).ready(function(){
             success: function () {
                 toastr["success"]("Rating has been successfully reset")
                 LoadProductRating();
+                SetUserRating(0);
             },
             error: function () {
                 toastr["error"]("something went wrong with rating reset")

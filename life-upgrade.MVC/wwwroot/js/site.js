@@ -85,7 +85,8 @@ const RenderProductRating = (ratings, userId, container) => {
     let userRating = ratings.find(x => x.userId === userId)?.rating ?? null;
     if (userRating)
     {
-        $("#rating-form")[0].getElementsByTagName("input").namedItem("star" + userRating).checked = true;    
+        SetUserRating(userRating);
+        // $("#rating-form")[0].getElementsByTagName("input").namedItem("star" + userRating).checked = true;    
     }
 
     let ratingContainer = $("#rating-container");
@@ -110,7 +111,8 @@ const LoadProductRating = () => {
         type: 'get',
         success: function (data) {
             if (!data.length) {
-                container.html("No rating yet")
+                // container.html("No rating yet")
+                container.empty();
             } else {
                 RenderProductRating(data, userId, container);
             }
@@ -119,4 +121,12 @@ const LoadProductRating = () => {
             toastr["error"]("LoadProductRating went wrong")
         }
     })
+}
+
+const SetUserRating = (rating) => {
+    if (rating) {
+        $("#rating-form")[0].getElementsByTagName("input").namedItem("star" + rating).checked = true;
+    } else {
+        [...$("#rating-form")[0].getElementsByTagName("input")].filter(x => x.id.startsWith("star") ).forEach(y => y.checked = false)
+    }
 }
