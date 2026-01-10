@@ -27,7 +27,15 @@ public class PhotoRepository : IPhotoRepository
 
     public async Task DeleteByGuids(List<Guid> guids)
     {
-        var x =  await _dbContext.Photos.Where(x => guids.Contains(x.Id)).ExecuteDeleteAsync();
+        var order = 0;
+        var productId = _dbContext.Photos.FirstOrDefault(x => x.Id == guids[0])?.ProductId;
+        if (productId != null)
+        {
+            await _dbContext.Photos.Where(x => guids.Contains(x.Id)).ExecuteDeleteAsync();
+            var photos = await _dbContext.Photos.Where(x => x.ProductId == productId).OrderBy(x => x.Order).ToListAsync();
+            photos.ForEach(x => x.Order = order++);
+            await Commit();    
+        }
     }
 
     public Task Commit()
