@@ -14,7 +14,9 @@ public static class ServiceCollectionExtension
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<LifeUpgradeDbContext>(options => options.UseSqlServer(
+        services.AddDbContext<LifeUpgradeDbContext>(options => options.
+            UseLazyLoadingProxies().
+            UseSqlServer(
             configuration.GetConnectionString("LifeUpgradeSqlServer")));
 
         services.AddDefaultIdentity<ApplicationUser>()

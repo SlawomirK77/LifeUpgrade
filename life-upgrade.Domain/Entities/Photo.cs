@@ -9,5 +9,5 @@ public class Photo
     public decimal Size { get; set; } = default!;
     public int Order { get; set; } = default!;
     public Guid ProductId { get; set; } = default!;
-    public Product Product { get; set; } = default!;
+    public virtual Product Product { get; set; } = default!;
 }
