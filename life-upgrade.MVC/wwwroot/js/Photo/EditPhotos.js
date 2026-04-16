@@ -1,5 +1,5 @@
 $(document).ready(function(s){
-    let container = $("#photos-modal");
+    let container = $("#editPhotosModal");
     let itemsToDelete = [];
 
     container.on("click",".card-img-bottom","click",function (event) {

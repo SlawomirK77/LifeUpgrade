@@ -15,13 +15,6 @@ public class ChangeOrderPhotosCommandHandler : IRequestHandler<ChangeOrderPhotos
 
     public async Task Handle(ChangeOrderPhotosCommand request, CancellationToken cancellationToken)
     {
-        var newOrder = 0;
-
-        foreach (var photoId in request.PhotosGuids)
-        {
-            var savedPhoto = await _photoRepository.GetById(photoId);
-            savedPhoto!.Order = newOrder++;
-            await _photoRepository.Commit();
-        }
+        await _photoRepository.SetNewPhotosOrder(request.PhotosGuids);
     }
 }

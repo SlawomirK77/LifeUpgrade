@@ -1,0 +1,13 @@
+@model List<LifeUpgrade.Application.Photo.PhotoDto>
+
+@for (var i = 0; i < Model.Count; i++)
+{
+    <div id="@Model[i].Id" class="card border-secondary mb-3 card-draggable" data-order="@i">
+        <div class="card-header">@Model[i].Description</div>
+        <img class="card-img-bottom" src="data:image/png;base64,@Convert.ToBase64String(Model[i].Bytes.ToArray())" alt="Product" loading="lazy"/>
+    </div>
+}
+@if ((bool)(ViewData["change-order-button-show"] ?? false))
+{
+    <button id="change-order" class="btn btn-dark">|| ChangeOrder ||</button>
+}

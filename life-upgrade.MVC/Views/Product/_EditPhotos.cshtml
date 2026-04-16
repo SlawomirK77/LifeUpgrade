@@ -1,4 +1,4 @@
-@model EditPhotos
+@model LifeUpgrade.Application.Product.ProductDto
 
 <link rel="stylesheet" href="~/css/selectable.css" asp-append-version="true"/>
 
@@ -13,7 +13,7 @@
                 <h1 class="modal-title fs-5" id="editPhotosModalLabel">Image list</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="photos-modal" data-encoded-name="@Model.ProductEncodedName"></div>
+            <partial name="_Photos" model="Model.Photos"/>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button id="delete-button" type="button" class="btn btn-danger" asp-controller="Photo" asp-action="Delete">Delete</button>
@@ -21,6 +21,6 @@
         </div>
     </div>
     <div class="container">
-        <partial name="../Photo/_CreatePhotos" model="new CreatePhotos() { ProductEncodedName = Model.ProductEncodedName! }"/>
+        <partial name="../Photo/_CreatePhotos" model="new CreatePhotos() { ProductEncodedName = Model.EncodedName! }"/>
     </div>
 </div>

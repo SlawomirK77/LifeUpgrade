@@ -55,9 +55,10 @@ public class ProductController : Controller
             .AsQueryable();
         const int pageSize = 8;
         var viewData = await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize);
+        // await products.ForEachAsync(x => x.Photos.OrderBy(p => p.Order));
         foreach (var product in viewData)
         {
-            var mainPhoto = product.Photos.FirstOrDefault();
+            var mainPhoto = product.Photos.Find(x => x.Order == 0);
             product.Photos = mainPhoto != null ? [_mapper.Map<Photo>(mainPhoto)] : [];
         }
         return View(viewData);
@@ -67,7 +68,7 @@ public class ProductController : Controller
     public async Task<IActionResult> Details(string encodedName)
     {
         var dto = await _mediator.Send(new GetProductByEncodedNameQuery(encodedName));
-        dto.Photos = _mediator.Send(new GetPhotosByProductEncodedNameQuery() { EncodedName = encodedName }).Result.ToList();
+        // dto.Photos = _mediator.Send(new GetPhotosByProductEncodedNameQuery() { EncodedName = encodedName }).Result.ToList();
         
         return View(dto);
     }
