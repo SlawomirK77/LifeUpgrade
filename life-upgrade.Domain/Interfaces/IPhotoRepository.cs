@@ -11,4 +11,5 @@ public interface IPhotoRepository
     Task DeleteByGuids(List<Guid> guids);
     Task<IEnumerable<Domain.Entities.Photo>> GetPhotosByProductEncodedName(string encodedName);
     Task<IEnumerable<Domain.Entities.Photo>> GetPhotosByOrderPosition(int orderPosition);
+    Task SetNewPhotosOrder(List<Guid> guids);
 }

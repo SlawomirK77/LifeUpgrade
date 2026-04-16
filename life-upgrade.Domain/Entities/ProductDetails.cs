@@ -4,7 +4,7 @@ namespace LifeUpgrade.Domain.Entities
     {
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public Guid? CreatedById { get; set; }
-        public ApplicationUser? CreatedBy { get; set; }
+        public virtual ApplicationUser? CreatedBy { get; set; }
         public List<ProductType> Type { get; set; } = [];
     }
 

@@ -8,5 +8,5 @@ public class WebShop
     public string Country { get; set; } = default!;
 
     public Guid ProductId { get; set; } = default!;
-    public Product Product { get; set; } = default!;
+    public virtual Product Product { get; set; } = default!;
 }

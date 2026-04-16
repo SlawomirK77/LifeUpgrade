@@ -16,7 +16,11 @@ public class LifeUpgradeDbContext : IdentityDbContext<Domain.Entities.Applicatio
     public DbSet<Domain.Entities.WebShop> WebShops { get; set; }
     public DbSet<Domain.Entities.Photo> Photos { get; set; }
     public DbSet<Domain.Entities.ProductRating> ProductRatings { get; set; }
-    
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer().UseLazyLoadingProxies();
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

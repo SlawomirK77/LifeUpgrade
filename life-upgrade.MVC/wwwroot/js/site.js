@@ -62,14 +62,15 @@ const LoadProductPhotos = () => {
     const productEncodedName = container.data("encodedName");
 
     $.ajax({
-        url: `/Product/${productEncodedName}/Photo`,
+        // url: `/Product/${productEncodedName}/Photo`,
+        url: `/Product/${productEncodedName}/Details`,
         type: 'get',
         success: function (data) {
             if (!data.length) {
                 container.html("There are no photos for this product")
             } else {
-                RenderProductPhotos(data, container, true);
-                RenderProductPhotos(data, $("#photos-modal"));
+                // RenderProductPhotos(data, container, true);
+                // RenderProductPhotos(data, $("#photos-modal"));
                 MakeCardsDraggable();
             }
         },

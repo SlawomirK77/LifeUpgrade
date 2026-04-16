@@ -45,14 +45,16 @@
 <div>
     <partial name="_CreateWebShop" model="new CreateWebShopCommand(){ProductEncodedName=Model.EncodedName!}"/>
     <partial name="_CreatePhoto" model="new CreatePhoto(){ProductEncodedName=Model.EncodedName!}"/>
-    <partial name="_EditPhotos" model="new EditPhotos(Model.EncodedName!, Model.Photos)"/>
+    <partial name="_EditPhotos" model="Model"/>
     <br/>
     <a class="btn btn-outline-secondary" asp-controller="Product" asp-action="Edit" asp-route-encodedName="@Model.EncodedName">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>      
 
 <div id="webshops" class="row" data-encoded-name="@Model.EncodedName"></div>
-<div id="photos" class="row" data-encoded-name="@Model.EncodedName"></div>
+<div id="photos" class="row" data-encoded-name="@Model.EncodedName">
+    <partial name="_Photos" model="Model.Photos" view-data='@new ViewDataDictionary(ViewData){{ "change-order-button-show" , true }}'/>
+</div>
 <div id="rating" class="row" data-encoded-name="@Model.EncodedName" data-user-id="@UserManager.GetUserId(User)"></div> @*container is empty but data-encoded-name is required somehow*@
 
 @section Scripts{

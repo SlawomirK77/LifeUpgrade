@@ -1,8 +1,8 @@
 $(document).ready(function(){
     
     LoadProductWebShops();
-    LoadProductPhotos();
     LoadProductRating();
+    MakeCardsDraggable();
     
     $("#addWebShopModal form").submit(function (event) {
         event.preventDefault();
